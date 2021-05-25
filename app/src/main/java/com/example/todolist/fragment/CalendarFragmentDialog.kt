@@ -5,22 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.GridView
 import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
 import com.example.todolist.R
-import com.example.todolist.adapter.GridViewAdapter
 
-class AddTaskFragmentDialog : DialogFragment() {
-
-    val colors = arrayListOf(
-        (R.color.red),
-        (R.color.pink),
-        (R.color.yellow),
-        (R.color.green),
-        (R.color.blue),
-        (R.color.grey),
-    )
+class CalendarFragmentDialog : DialogFragment() {
 
     private lateinit var backBtn: ImageButton
     private lateinit var checkBtn: ImageButton
@@ -31,16 +20,10 @@ class AddTaskFragmentDialog : DialogFragment() {
     ): View? {
         dialog!!.setCancelable(false);
 
-        val rootView = inflater.inflate(R.layout.fragment_add_task_dialog, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_calendar_dialog, container, false)
 
-        val gridView: GridView = rootView.findViewById(R.id.gv_colorPicker_addTask)
-        val adapter = GridViewAdapter(rootView.context ,colors)
-
-        gridView.adapter = adapter
-
-
-        backBtn = rootView.findViewById(R.id.ib_back_addTask)
-        checkBtn = rootView.findViewById(R.id.ib_finish_addTask)
+        backBtn = rootView.findViewById(R.id.ib_back_calendar)
+        checkBtn = rootView.findViewById(R.id.ib_check_calendar)
 
         backBtn.setOnClickListener {
             dismiss()
@@ -48,7 +31,6 @@ class AddTaskFragmentDialog : DialogFragment() {
         checkBtn.setOnClickListener {
             dismiss()
         }
-
 
         return rootView
     }

@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
         addTaskBtn.setOnClickListener {
-            AddTaskFragmentDialog().show(supportFragmentManager, "test")
+            AddTaskFragmentDialog().show(supportFragmentManager, "addTask")
+        }
+        calendarBtn.setOnClickListener {
+            CalendarFragmentDialog().show(supportFragmentManager, "calendar")
         }
     }
 }

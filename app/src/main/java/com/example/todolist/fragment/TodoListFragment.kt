@@ -3,7 +3,6 @@ package com.example.todolist.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
@@ -32,6 +31,7 @@ class TodoListFragment : Fragment() {
 
         val layout = GridLayoutManager(context, 2)
         recyclerView.layoutManager = layout
+        recyclerView.setHasFixedSize(true)
 
         return rootView
     }

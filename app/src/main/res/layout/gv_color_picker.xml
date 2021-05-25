@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <Button
-        android:id="@+id/button"
-        android:background="@drawable/_color_picker"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="20dp"/>
+        android:id="@+id/btn_color"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/_color_picker" />
 
 </LinearLayout>

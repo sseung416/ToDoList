@@ -21,6 +21,7 @@ class GridViewAdapter(private var context: Context, private var colorList: Array
         val view: View = inflater.inflate(R.layout.gv_item_color_picker, null)
 
         val ib_color: Button = view.findViewById(R.id.btn_color)
+        //db 값 받아서 바꿔주기
         ib_color.setBackgroundColor(ContextCompat.getColor(context, colorList[position]))
 
         return view

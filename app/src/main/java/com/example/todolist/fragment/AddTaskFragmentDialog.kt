@@ -1,6 +1,7 @@
 package com.example.todolist.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,9 +38,7 @@ class AddTaskFragmentDialog : DialogFragment() {
 
     var now: Long = 0
     lateinit var date: Date
-    val dateFormat = SimpleDateFormat("yyyy-MM--dd")
-
-    var colorTemp: Int = 0
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     @InternalCoroutinesApi
     override fun onCreateView(
@@ -52,7 +51,6 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         val gridView: GridView = rootView.findViewById(R.id.gv_colorPicker_addTask)
         val adapter = GridViewAdapter(rootView.context ,colors)
-
         gridView.adapter = adapter
 
         backBtn = rootView.findViewById(R.id.ib_back_addTask)
@@ -64,7 +62,7 @@ class AddTaskFragmentDialog : DialogFragment() {
         val addRunnable = Runnable {
             val newTask = Task()
 
-            newTask.color = colorTemp
+            newTask.color = adapter.colorTemp
             newTask.content = contentEditText.text.toString()
             newTask.date = dateFormat.format(date)
 
@@ -84,19 +82,8 @@ class AddTaskFragmentDialog : DialogFragment() {
             dismiss()
         }
 
-        gridView.setOnItemClickListener { parent, view, position, id ->
-            colorTemp = when(position) {
-                0 -> R.color.red
-                1 -> R.color.pink
-                2 -> R.color.yellow
-                3 -> R.color.green
-                4 -> R.color.blue
-                5 -> R.color.grey
-                else -> R.color.white
-            }
-        }
-
         return rootView
     }
+
 
 }

@@ -8,7 +8,7 @@ import com.example.todolist.data.Task
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 
-@Database(entities = arrayOf(Task::class), version = 1)
+@Database(entities = [Task::class], version = 1)
 abstract class TaskDatabase: RoomDatabase() {
     abstract fun getTaskDao(): TaskDAO
 
@@ -20,7 +20,8 @@ abstract class TaskDatabase: RoomDatabase() {
             if(INSTANCE == null) {
                 synchronized(TaskDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        TaskDatabase::class.java, "task.db").build()
+                        TaskDatabase::class.java, "task.db")
+                        .build()
                 }
             }
             return INSTANCE

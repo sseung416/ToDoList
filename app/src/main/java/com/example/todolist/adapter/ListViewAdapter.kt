@@ -10,7 +10,7 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.example.todolist.R
 
-class GridViewAdapter(private var context: Context, private var colorList: ArrayList<Int>) : BaseAdapter() {
+class ListViewAdapter(private var context: Context, private var colorList: ArrayList<Int>) : BaseAdapter() {
     var colorTemp: Int = 0
 
     override fun getCount(): Int = colorList.size
@@ -21,12 +21,14 @@ class GridViewAdapter(private var context: Context, private var colorList: Array
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view: View = inflater.inflate(R.layout.gv_item_color_picker, null)
+        val view: View = inflater.inflate(R.layout.lv_item_color_picker, null)
 
         val ib_color: Button = view.findViewById(R.id.btn_color)
         ib_color.setBackgroundColor(ContextCompat.getColor(context, colorList[position]))
 
         view.setOnClickListener {
+            ib_color.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable._color_picker, 0, 0,0)
+
             Log.d("아잉", position.toString() + " clicked")
             colorTemp = position
 //            colorTemp = when(position) {

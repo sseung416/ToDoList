@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.ImageButton
+import android.widget.ListView
 import androidx.fragment.app.DialogFragment
 import com.example.todolist.R
-import com.example.todolist.adapter.GridViewAdapter
+import com.example.todolist.adapter.ListViewAdapter
 import com.example.todolist.data.Task
 import com.example.todolist.database.TaskDatabase
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -49,9 +50,9 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         val rootView = inflater.inflate(R.layout.fragment_add_task_dialog, container, false)
 
-        val gridView: GridView = rootView.findViewById(R.id.gv_colorPicker_addTask)
-        val adapter = GridViewAdapter(rootView.context ,colors)
-        gridView.adapter = adapter
+        val listView: ListView = rootView.findViewById(R.id.lv_colorPicker_addTask)
+        val adapter = ListViewAdapter(rootView.context ,colors)
+        listView.adapter = adapter
 
         backBtn = rootView.findViewById(R.id.ib_back_addTask)
         checkBtn = rootView.findViewById(R.id.ib_finish_addTask)

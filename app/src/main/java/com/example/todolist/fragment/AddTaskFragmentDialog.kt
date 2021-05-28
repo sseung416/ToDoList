@@ -1,5 +1,6 @@
 package com.example.todolist.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,8 +11,10 @@ import android.widget.GridView
 import android.widget.ImageButton
 import android.widget.ListView
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
-import com.example.todolist.adapter.ListViewAdapter
+import com.example.todolist.adapter.ColorPickerAdapter
 import com.example.todolist.data.Task
 import com.example.todolist.database.TaskDatabase
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -20,7 +23,7 @@ import java.util.*
 
 class AddTaskFragmentDialog : DialogFragment() {
 
-    val colors = arrayListOf(
+    val colors = listOf(
         (R.color.red),
         (R.color.pink),
         (R.color.yellow),
@@ -35,8 +38,6 @@ class AddTaskFragmentDialog : DialogFragment() {
 
     private lateinit var taskDb: TaskDatabase
 
-    private var taskList = listOf<Task>()
-
     var now: Long = 0
     lateinit var date: Date
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -50,9 +51,12 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         val rootView = inflater.inflate(R.layout.fragment_add_task_dialog, container, false)
 
-        val listView: ListView = rootView.findViewById(R.id.lv_colorPicker_addTask)
-        val adapter = ListViewAdapter(rootView.context ,colors)
-        listView.adapter = adapter
+        val recyclerView: RecyclerView = rootView.findViewById(R.id.lv_colorPicker_addTask)
+        val adapter = ColorPickerAdapter(colors)
+        recyclerView.adapter = adapter
+        val layout = LinearLayoutManager(rootView.context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = layout
+        recyclerView.setHasFixedSize(true)
 
         backBtn = rootView.findViewById(R.id.ib_back_addTask)
         checkBtn = rootView.findViewById(R.id.ib_finish_addTask)
@@ -63,7 +67,7 @@ class AddTaskFragmentDialog : DialogFragment() {
         val addRunnable = Runnable {
             val newTask = Task()
 
-            newTask.color = adapter.colorTemp
+            newTask.color = adapter.selectedPos
             newTask.content = contentEditText.text.toString()
             newTask.date = dateFormat.format(date)
 
@@ -82,6 +86,7 @@ class AddTaskFragmentDialog : DialogFragment() {
             addThread.start()
             dismiss()
         }
+
 
         return rootView
     }

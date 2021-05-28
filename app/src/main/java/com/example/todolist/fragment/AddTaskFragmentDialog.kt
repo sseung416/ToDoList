@@ -53,6 +53,7 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.lv_colorPicker_addTask)
         val adapter = ColorPickerAdapter(colors)
+
         recyclerView.adapter = adapter
         val layout = LinearLayoutManager(rootView.context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = layout

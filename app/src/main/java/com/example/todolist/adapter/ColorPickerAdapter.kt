@@ -1,5 +1,6 @@
 package com.example.todolist.adapter
 
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -19,20 +20,18 @@ class ColorPickerAdapter(private val color: List<Int>) :
     var selectedPos: Int = -1
 
 
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val colorBtn: Button = itemView.findViewById(R.id.btn_color_colorPicker)
-        var drawable: GradientDrawable = colorBtn.background as GradientDrawable //동적 색 설정
+        val drawable: GradientDrawable = colorBtn.background as GradientDrawable //동적 색 설정
 
         fun binding(item: Int, position: Int) {
-            //색 설정
-//            drawable.setColor(item)
-            colorBtn.setBackgroundResource(R.drawable._color_picker)
-            colorBtn.setBackgroundColor(ContextCompat.getColor(itemView.context, item))
+            drawable.setColor(ContextCompat.getColor(itemView.context, item))
 
             colorBtn.setOnClickListener {
-                colorBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_check_white_24, 0, 0,0)
+                colorBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_check_white_24,0)
 
-                if(selectedPos != -1) notifyItemChanged(selectedPos)
+                if(selectedPos != -1 && selectedPos != position) notifyItemChanged(selectedPos)
                 selectedPos = position
             }
 

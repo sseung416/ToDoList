@@ -1,7 +1,7 @@
 package com.example.todolist.database
 
 import androidx.room.*
-import com.example.todolist.data.Task
+import com.example.todolist.database.data.Task
 
 @Dao
 interface TaskDAO {
@@ -16,4 +16,7 @@ interface TaskDAO {
 
     @Query("SELECT * FROM task")
     fun getAll(): List<Task>
+
+    @Query("DELETE FROM task")
+    fun deleteAll()
 }

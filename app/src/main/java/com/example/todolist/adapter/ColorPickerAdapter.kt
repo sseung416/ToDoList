@@ -19,8 +19,6 @@ class ColorPickerAdapter(private val color: List<Int>) :
 
     var selectedPos: Int = -1
 
-
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val colorBtn: Button = itemView.findViewById(R.id.btn_color_colorPicker)
         val drawable: GradientDrawable = colorBtn.background as GradientDrawable //동적 색 설정

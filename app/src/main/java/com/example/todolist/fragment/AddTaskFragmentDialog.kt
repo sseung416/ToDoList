@@ -1,22 +1,20 @@
 package com.example.todolist.fragment
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.GridView
 import android.widget.ImageButton
-import android.widget.ListView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.adapter.ColorPickerAdapter
-import com.example.todolist.data.Task
+import com.example.todolist.database.data.Task
 import com.example.todolist.database.TaskDatabase
+import com.example.todolist.viewmodel.AddTaskViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +29,8 @@ class AddTaskFragmentDialog : DialogFragment() {
         (R.color.blue),
         (R.color.grey),
     )
+
+    private val viewModel: AddTaskViewModel by viewModels()
 
     private lateinit var backBtn: ImageButton
     private lateinit var checkBtn: ImageButton

@@ -49,7 +49,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/ib_back_addTask" />
 
                 <EditText
-                    android:id="@+id/et_task_addTask"
+                    android:id="@+id/et_content_addTask"
                     android:gravity="fill_horizontal"
                     android:paddingHorizontal="10dp"
                     android:layout_width="0dp"
@@ -59,13 +59,14 @@
                     android:layout_marginBottom="16dp"
                     android:background="@color/light_grey"
                     android:hint="Input Task."
+                    android:text="@{viewModel.content}"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lv_colorPicker_addTask" />
+                    app:layout_constraintTop_toBottomOf="@+id/rv_colorPicker_addTask" />
 
                 <ImageButton
                     android:id="@+id/ib_finish_addTask"
@@ -78,14 +79,16 @@
                     app:layout_constraintTop_toTopOf="@+id/ib_back_addTask" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lv_colorPicker_addTask"
+                    android:id="@+id/rv_colorPicker_addTask"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="2dp"
-                    app:layout_constraintBottom_toTopOf="@+id/et_task_addTask"
+                    app:layout_constraintBottom_toTopOf="@+id/et_content_addTask"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_date_addTask" />

@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -20,10 +22,20 @@ class ToDoListAdapter(private val items: List<Task>) : RecyclerView.Adapter<ToDo
     inner class ViewHolder(itemView: View, private var context: Context) : RecyclerView.ViewHolder(itemView) {
         private val cv_task: CardView = itemView.findViewById(R.id.cv_task_toDoList)
         private val tv_content: TextView = itemView.findViewById(R.id.tv_task_toDoList)
+        private val ib_finish: ImageButton = itemView.findViewById(R.id.ib_finish_toDoList)
+        private val ib_modify: ImageButton = itemView.findViewById(R.id.ib_modify_toDoList)
+
 
         fun binding(item: Task) {
             cv_task.setBackgroundColor(ContextCompat.getColor(context, item.color))
             tv_content.text = item.content
+
+            ib_finish.setOnClickListener {  }
+            ib_modify.setOnClickListener{ editData() }
+        }
+
+        fun editData(content: String, color: Int, date: String) {
+
         }
     }
 

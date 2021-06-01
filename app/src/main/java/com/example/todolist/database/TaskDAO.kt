@@ -1,5 +1,6 @@
 package com.example.todolist.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.todolist.database.data.Task
 
@@ -15,7 +16,7 @@ interface TaskDAO {
     fun delete(task: Task)
 
     @Query("SELECT * FROM task")
-    fun getAll(): List<Task>
+    fun getAll(): LiveData<List<Task>>
 
     @Query("DELETE FROM task")
     fun deleteAll()

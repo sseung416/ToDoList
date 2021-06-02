@@ -17,7 +17,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddTaskFragmentDialog : DialogFragment(), View.OnClickListener {
+class AddTaskFragmentDialog : DialogFragment() {
 
     val colors = listOf(
         (R.color.red),
@@ -70,11 +70,6 @@ class AddTaskFragmentDialog : DialogFragment(), View.OnClickListener {
         newTask.date = date.toString()
 
         viewModel.insert(newTask)
-
-        dismiss()
     }
 
-    override fun onClick(v: View?) {
-        TODO("Not yet implemented")
-    }
 }

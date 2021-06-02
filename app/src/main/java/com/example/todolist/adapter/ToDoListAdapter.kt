@@ -1,6 +1,7 @@
 package com.example.todolist.adapter
 
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,12 +31,16 @@ class ToDoListAdapter(private val items: List<Task>) : RecyclerView.Adapter<ToDo
             cv_task.setBackgroundColor(ContextCompat.getColor(context, item.color))
             tv_content.text = item.content
 
-            ib_finish.setOnClickListener {  }
+            ib_finish.setOnClickListener { finishToDo() }
             ib_modify.setOnClickListener{ editData() }
         }
 
         fun editData(content: String, color: Int, date: String) {
 
+        }
+
+        fun finishToDo() { //애니메이션, 소리 추가하기
+            tv_content.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
     }
 

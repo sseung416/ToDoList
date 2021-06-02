@@ -22,36 +22,24 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
 
     private val dialog = AddTaskFragmentDialog()
 
+
+
     init {
         val db = Room.databaseBuilder(application, TaskDatabase::class.java, "task").build()
         taskDao = db.getTaskDao()
     }
 
-    fun insert(task: Task) {
-        taskDao.insert(task)
+    fun insert(newTask: Task) {
+        taskDao.insert(newTask)
     }
-
-    fun delete(task: Task) {
-        taskDao.delete(task)
-    }
-
-    fun onFinishBtnClcik() {
-
-
-//        insert(newTask)
-        dialog.dismiss()
-    }
-
-    fun onBackBtnClick() {
-        dialog.dismiss()
-    }
-
-
-    fun getAll() : LiveData<List<Task>> = taskDao.getAll()
 
     fun getTask() : LiveData<Task> = _taskMutableLiveData
 
     fun setContent(s: String) {
         _content.value = s
+    }
+
+    fun onBackBtnClick() {
+        dialog.dismiss()
     }
 }

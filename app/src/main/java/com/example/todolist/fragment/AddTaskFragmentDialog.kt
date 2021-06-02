@@ -1,6 +1,7 @@
 package com.example.todolist.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddTaskFragmentDialog : DialogFragment() {
+class AddTaskFragmentDialog : DialogFragment(), View.OnClickListener {
 
     val colors = listOf(
         (R.color.red),
@@ -34,6 +35,8 @@ class AddTaskFragmentDialog : DialogFragment() {
     private val viewModel: AddTaskViewModel by viewModels()
     private lateinit var binding: FragmentAddTaskDialogBinding
 
+    private lateinit var adapter: ColorPickerAdapter
+
     var now: Long = 0
     lateinit var date: Date
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -48,40 +51,12 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         initRecyclerView()
 
-        viewModel.content.observe(viewLifecycleOwner, {
-            binding.etContentAddTask.text = it.toString()
-        })
-
-
-
-//        val addRunnable = Runnable {
-//            val newTask = Task()
-//
-//            newTask.color = adapter.selectedPos
-//            newTask.content = contentEditText.text.toString()
-//            newTask.date = dateFormat.format(date)
-//
-//            db.getTaskDao().insert(newTask)
-//        }
-
-//        backBtn.setOnClickListener {
-//            dismiss()
-//        }
-//        checkBtn.setOnClickListener {
-//            now = System.currentTimeMillis()
-//            date = Date(now)
-//
-//            val addThread = Thread(addRunnable)
-//            addThread.start()
-//            dismiss()
-//        }
-
-
         return rootView
     }
 
     private fun initRecyclerView() {
-        binding.rvColorPickerAddTask.adapter = ColorPickerAdapter(colors)
+        adapter = ColorPickerAdapter(colors)
+        binding.rvColorPickerAddTask.adapter = adapter
         binding.rvColorPickerAddTask.setHasFixedSize(true)
     }
 
@@ -91,8 +66,15 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         val newTask = Task()
         newTask.content = binding.etContentAddTask.text.toString()
-        newTask.color
+        newTask.color = adapter.selectedPos
         newTask.date = date.toString()
 
+        viewModel.insert(newTask)
+
+        dismiss()
+    }
+
+    override fun onClick(v: View?) {
+        TODO("Not yet implemented")
     }
 }

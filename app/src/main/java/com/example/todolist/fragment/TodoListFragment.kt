@@ -25,29 +25,35 @@ class TodoListFragment : Fragment() {
     private var taskList = mutableListOf<Task>()
 
     private val viewModel: ToDoListViewModel by viewModels()
-    private lateinit var binding: FragmentTodoListBinding
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var rvAdapter: ToDoListAdapter
 
     @InternalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_todo_list, container, false)
 
-        val rootView = binding.root
+        initRecyclerView(rootView)
 
-        initRecyclerView()
-
-        viewModel.getAll().observe(viewLifecycleOwner, {
-
+        viewModel.getAll().observe(viewLifecycleOwner, { //DB값이 변경되면 todolist 추가(= UI 변경)
+            addTodoList()
         })
 
         return rootView
     }
 
-    private fun initRecyclerView() {
-        binding.rvTodolist.adapter = ToDoListAdapter(listOf()) //값 전달
-        binding.rvTodolist.setHasFixedSize(true)
+    private fun initRecyclerView(v: View) {
+        recyclerView = v.findViewById(R.id.rv_todolist)
+        rvAdapter = ToDoListAdapter(listOf()) //값 전달(db)
+        recyclerView.adapter = rvAdapter
+        recyclerView.setHasFixedSize(true)
+    }
+
+    private fun addTodoList() {
+
     }
 
 //    fun getTaskData() {

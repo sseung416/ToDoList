@@ -22,8 +22,6 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
 
     private val dialog = AddTaskFragmentDialog()
 
-
-
     init {
         val db = Room.databaseBuilder(application, TaskDatabase::class.java, "task").build()
         taskDao = db.getTaskDao()
@@ -37,6 +35,13 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
 
     fun setContent(s: String) {
         _content.value = s
+    }
+
+    fun onFinishBtnClick() {
+        val fragment = AddTaskFragmentDialog()
+        fragment.addTask()
+
+        dialog.dismiss()
     }
 
     fun onBackBtnClick() {

@@ -39,7 +39,9 @@ class TodoListFragment : Fragment() {
         initRecyclerView(rootView)
 
         viewModel.getAll().observe(viewLifecycleOwner, { //DB값이 변경되면 todolist 추가(= UI 변경)
-            addTodoList()
+            //뷰모델에서 db값 받아서 taskList에 추가
+//            viewModel.
+
         })
 
         return rootView
@@ -47,7 +49,7 @@ class TodoListFragment : Fragment() {
 
     private fun initRecyclerView(v: View) {
         recyclerView = v.findViewById(R.id.rv_todolist)
-        rvAdapter = ToDoListAdapter(listOf()) //값 전달(db)
+        rvAdapter = ToDoListAdapter(listOf(), viewModel) //값 전달(db)
         recyclerView.adapter = rvAdapter
         recyclerView.setHasFixedSize(true)
     }

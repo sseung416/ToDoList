@@ -35,9 +35,6 @@ class MainActivity : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
         dateTextView.text = dateFormat.format(date)
 
-
-
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, TodoListFragment())
             .commit()
@@ -48,6 +45,5 @@ class MainActivity : AppCompatActivity() {
         calendarBtn.setOnClickListener {
             CalendarFragmentDialog().show(supportFragmentManager, "calendar")
         }
-
     }
 }

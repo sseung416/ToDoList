@@ -1,6 +1,5 @@
 package com.example.todolist.adapter
 
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View

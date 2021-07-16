@@ -2,19 +2,23 @@ package com.example.todolist.adapter
 
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.database.data.Task
+import com.example.todolist.fragment.AddTaskFragmentDialog
+import com.example.todolist.viewmodel.ToDoListViewModel
 
-class ToDoListAdapter(private val items: List<Task>) : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
+
+class ToDoListAdapter(private val items: List<Task>, private val viewModel: ToDoListViewModel) : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
 
     init {
         setHasStableIds(true);
@@ -26,20 +30,20 @@ class ToDoListAdapter(private val items: List<Task>) : RecyclerView.Adapter<ToDo
         private val ib_finish: ImageButton = itemView.findViewById(R.id.ib_finish_toDoList)
         private val ib_modify: ImageButton = itemView.findViewById(R.id.ib_modify_toDoList)
 
-
         fun binding(item: Task) {
             cv_task.setBackgroundColor(ContextCompat.getColor(context, item.color))
             tv_content.text = item.content
 
-            ib_finish.setOnClickListener { finishToDo() }
-            ib_modify.setOnClickListener{ editData() }
+            ib_finish.setOnClickListener { onFinishBtnClick() }
+            ib_modify.setOnClickListener{ onModifyBtnClick() }
         }
 
-        fun editData(content: String, color: Int, date: String) {
-
+        fun onModifyBtnClick() {
+            Log.d("ㅋㅋㄹㅃㅃ", "ModifyBtn Clicked.")
+            AddTaskFragmentDialog().show((context as FragmentActivity).supportFragmentManager, "modifyTask")
         }
 
-        fun finishToDo() { //애니메이션, 소리 추가하기
+        fun onFinishBtnClick() { //애니메이션, 소리 추가하기
             tv_content.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
     }

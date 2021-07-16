@@ -1,23 +1,20 @@
 package com.example.todolist.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 import com.example.todolist.database.data.Task
 
 @Dao
 interface TaskDAO {
-    @Insert
-    fun insert(task: Task)
-
-    @Update
-    fun update(task: Task)
-
-    @Delete
-    fun delete(task: Task)
-
     @Query("SELECT * FROM task")
     fun getAll(): LiveData<List<Task>>
 
-    @Query("DELETE FROM task")
-    fun deleteAll()
+    @Insert
+    fun insert(task: Task)
+
+    @Delete
+    fun delete(task: Task)
 }

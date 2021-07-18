@@ -10,7 +10,7 @@ import com.example.todolist.database.data.Task
 @Dao
 interface TaskDAO {
     @Query("SELECT * FROM task")
-    fun getAll(): LiveData<List<Task>>
+    fun getAll(): List<Task>
 
     @Insert
     fun insert(task: Task)

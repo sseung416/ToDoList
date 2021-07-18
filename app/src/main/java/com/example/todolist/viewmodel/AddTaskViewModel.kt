@@ -10,39 +10,47 @@ import com.example.todolist.database.AppDatabase
 import com.example.todolist.database.TaskDAO
 import com.example.todolist.database.data.Task
 import com.example.todolist.fragment.AddTaskFragmentDialog
+import com.example.todolist.repository.AddTaskRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddTaskViewModel(application: Application) : AndroidViewModel(application) {
 
-    private lateinit var database: AppDatabase
-//    private var taskDao: TaskDAO
+    private lateinit var newTask: Task
+    private val repository = AddTaskRepository(application.applicationContext)
 
-    private val _task = MutableLiveData<Task>()
-//    private val _content = MutableLiveData<String>() //수정 시
+    private lateinit var _tasks: MutableLiveData<List<Task>>
+    var tasks = _tasks
 
-//    val content: LiveData<String>
-//        get() = _content
+    fun addTask(content: String, selectedPos: Int) {
+        newTask = Task()
 
-    fun insert() {
-        
+        newTask.content = content
+        newTask.color = selectedPos
+        newTask.date = setDate()
     }
 
-    fun delete() {
+    private fun setDate(): String {
+        val date = Date(System.currentTimeMillis())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
+        return dateFormat.format(date)
     }
 
-    fun buildDatabase() {
+    fun getAllTask() {
+        viewModelScope.launch {
+           _tasks.postValue(repository.getAllTask())
+        }
     }
 
     private val dialog = AddTaskFragmentDialog()
 
     fun onFinishBtnClick() {
-        val fragment = AddTaskFragmentDialog()
-        fragment.addTask()
-
-        insert()
-
-        dialog.dismiss()
+        viewModelScope.launch {
+            repository.insert(newTask)
+        }
     }
 
     fun onBackBtnClick() {

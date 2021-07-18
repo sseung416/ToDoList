@@ -9,8 +9,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 
-class ColorPickerAdapter(private val color: List<Int>) :
-    RecyclerView.Adapter<ColorPickerAdapter.ViewHolder>() {
+class ColorPickerAdapter : RecyclerView.Adapter<ColorPickerAdapter.ViewHolder>() {
+
+    private val colors = listOf(
+        (R.color.red),
+        (R.color.pink),
+        (R.color.yellow),
+        (R.color.green),
+        (R.color.blue),
+        (R.color.grey),
+    )
 
     init {
         setHasStableIds(true)
@@ -42,10 +50,10 @@ class ColorPickerAdapter(private val color: List<Int>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding(color[position], position)
+        holder.binding(colors[position], position)
     }
 
-    override fun getItemCount(): Int = color.size
+    override fun getItemCount(): Int = colors.size
 
     override fun getItemId(position: Int): Long = position.toLong()
 }

@@ -14,7 +14,7 @@ class AddTaskRepository(private val context: Context) {
         db!!.TaskDAO()
     }
 
-    fun getAllTask(): LiveData<List<Task>> {
+    fun getAllTask(): List<Task> {
         return taskDAO.getAll()
     }
 

@@ -8,68 +8,54 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.example.todolist.R
 import com.example.todolist.adapter.ColorPickerAdapter
 import com.example.todolist.database.data.Task
 import com.example.todolist.databinding.FragmentAddTaskDialogBinding
 import com.example.todolist.viewmodel.AddTaskViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddTaskFragmentDialog : DialogFragment() {
 
-    val colors = listOf(
-        (R.color.red),
-        (R.color.pink),
-        (R.color.yellow),
-        (R.color.green),
-        (R.color.blue),
-        (R.color.grey),
-    )
-
     init {
         dialog!!.setCancelable(false);
     }
 
+    private val adapter = ColorPickerAdapter()
     private val viewModel: AddTaskViewModel by viewModels()
     private lateinit var binding: FragmentAddTaskDialogBinding
 
-    private lateinit var adapter: ColorPickerAdapter
-
-    var now: Long = 0
-    lateinit var date: Date
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-    @InternalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_task_dialog, container, false)
-        val rootView = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        observe()
 
-        return rootView
+        /* 시간이 있다면 ViewModel에서 SingleLiveEvent 사용해보기 */
+        binding.ibFinishAddTask.setOnClickListener {
+            viewModel.addTask(binding.etContentAddTask.toString(), adapter.selectedPos)
+            viewModel.onFinishBtnClick()
+            dialog!!.dismiss()
+        }
     }
 
     private fun initRecyclerView() {
-        adapter = ColorPickerAdapter(colors)
         binding.rvColorPickerAddTask.adapter = adapter
         binding.rvColorPickerAddTask.setHasFixedSize(true)
     }
 
-    fun addTask() {
-        now = System.currentTimeMillis()
-        date = Date(now)
-
-        val newTask = Task()
-        newTask.content = binding.etContentAddTask.text.toString()
-        newTask.color = adapter.selectedPos
-        newTask.date = date.toString()
-
-        viewModel.insert(newTask)
+    private fun observe() {
     }
-
 }

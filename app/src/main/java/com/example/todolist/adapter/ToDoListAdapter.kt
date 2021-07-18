@@ -23,7 +23,7 @@ import com.example.todolist.viewmodel.ToDoListViewModel
 
 class ToDoListAdapter : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
 
-    private val list = listOf<Task>()
+    private val list: ArrayList<Task> = ArrayList()
     private lateinit var binding: RvItemTaskBinding
 
     init {
@@ -60,4 +60,10 @@ class ToDoListAdapter : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
     override fun getItemCount(): Int = list.size
 
     override fun getItemId(position: Int): Long = position.toLong()
+
+    fun setList(list: List<Task>) {
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
 }

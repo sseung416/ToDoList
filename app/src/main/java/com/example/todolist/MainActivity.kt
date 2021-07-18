@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity() {
         dateTextView.text = getDate()
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, TodoListFragment())
+            .replace(R.id.fragmentContainerView, TodoListFragment(application))
             .commit()
 
         addTaskBtn.setOnClickListener {
-            AddTaskFragmentDialog().show(supportFragmentManager, "addTask")
+            AddTaskFragmentDialog(application).show(supportFragmentManager, "addTask")
         }
         calendarBtn.setOnClickListener {
             CalendarFragmentDialog().show(supportFragmentManager, "calendar")

@@ -1,5 +1,6 @@
 package com.example.todolist.fragment
 
+import android.app.Application
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -13,18 +14,18 @@ import com.example.todolist.viewmodel.AddTaskViewModel
 import com.example.todolist.viewmodel.ToDoListViewModel
 
 
-class TodoListFragment : Fragment() {
+class TodoListFragment(private val application: Application) : Fragment() {
 
     private lateinit var viewModel: AddTaskViewModel
     private lateinit var binding: FragmentTodoListBinding
 
-    private var adapter = ToDoListAdapter()
+    private var adapter = ToDoListAdapter(application)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this)[AddTaskViewModel::class.java]
+        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
         return binding.root

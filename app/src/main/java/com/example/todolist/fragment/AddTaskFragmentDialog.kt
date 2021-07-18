@@ -1,5 +1,6 @@
 package com.example.todolist.fragment
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.R
 import com.example.todolist.adapter.ColorPickerAdapter
@@ -19,20 +21,22 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddTaskFragmentDialog : DialogFragment() {
+class AddTaskFragmentDialog(private val application: Application) : DialogFragment() {
 
     init {
         dialog!!.setCancelable(false);
     }
 
     private val adapter = ColorPickerAdapter()
-    private val viewModel: AddTaskViewModel by viewModels()
+    private lateinit var viewModel: AddTaskViewModel
     private lateinit var binding: FragmentAddTaskDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_task_dialog, container, false)
         return binding.root
     }

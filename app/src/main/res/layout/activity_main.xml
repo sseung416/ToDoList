@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         app:contentInsetStart="0dp"
@@ -27,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="Today"
+                android:text="@string/today"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -72,18 +71,13 @@
                 app:srcCompat="@drawable/ic_add_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="com.example.todolist.fragment.TodoListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_todo_list" />
 
 </LinearLayout>

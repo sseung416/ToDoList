@@ -21,11 +21,18 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    init {
+        viewModelScope.launch(Dispatchers.Default) {
+            repository = AddTaskRepository(application.applicationContext)
+        }
+    }
+
     private lateinit var newTask: Task
-    private val repository = AddTaskRepository(application.applicationContext)
+    private lateinit var repository: AddTaskRepository
 
     private var _tasks = MutableLiveData<List<Task>>()
     var tasks = _tasks
+
 
     fun addTask(content: String, selectedPos: Int) {
         newTask = Task()

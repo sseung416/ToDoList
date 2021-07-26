@@ -13,7 +13,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var addTaskBtn: ImageButton
-    private lateinit var calendarBtn: ImageButton
     private lateinit var dateTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         addTaskBtn = findViewById(R.id.ib_add_main)
-        calendarBtn = findViewById(R.id.ib_calendar_main)
         dateTextView = findViewById(R.id.tv_date_main)
 
         dateTextView.text = getDate()
@@ -32,9 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         addTaskBtn.setOnClickListener {
             AddTaskFragmentDialog().show(supportFragmentManager, "addTask")
-        }
-        calendarBtn.setOnClickListener {
-            CalendarFragmentDialog().show(supportFragmentManager, "calendar")
         }
     }
 

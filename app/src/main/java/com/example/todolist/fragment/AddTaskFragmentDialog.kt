@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.R
 import com.example.todolist.adapter.ColorPickerAdapter
+import com.example.todolist.adapter.ToDoListAdapter
 import com.example.todolist.database.data.Task
 import com.example.todolist.databinding.FragmentAddTaskDialogBinding
 import com.example.todolist.viewmodel.AddTaskViewModel
@@ -26,6 +27,7 @@ class AddTaskFragmentDialog : DialogFragment() {
     private lateinit var application: Application
 
     private lateinit var adapter: ColorPickerAdapter
+    private lateinit var toDoListAdapter: ToDoListAdapter
     private lateinit var viewModel: AddTaskViewModel
     private lateinit var binding: FragmentAddTaskDialogBinding
 
@@ -33,10 +35,7 @@ class AddTaskFragmentDialog : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        application = requireActivity().application
-        adapter = ColorPickerAdapter()
-
-        requireDialog().setCancelable(false);
+        init()
 
         viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_task_dialog, container, false)
@@ -48,7 +47,8 @@ class AddTaskFragmentDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        observe()
+
+        binding.tvDateAddTask.text = getDate()
 
         /* 시간이 있다면 ViewModel에서 SingleLiveEvent 사용해보기 */
         binding.ibFinishAddTask.setOnClickListener {
@@ -58,12 +58,23 @@ class AddTaskFragmentDialog : DialogFragment() {
         }
     }
 
+    private fun init() {
+        application = requireActivity().application
+        adapter = ColorPickerAdapter()
+        toDoListAdapter = ToDoListAdapter()
+
+        requireDialog().setCancelable(false);
+    }
+
     private fun initRecyclerView() {
         binding.rvColorPickerAddTask.adapter = adapter
         binding.rvColorPickerAddTask.setHasFixedSize(true)
     }
 
-    private fun observe() {
-    }
+    private fun getDate(): String {
+        val date = Date(System.currentTimeMillis())
+        val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
 
+        return dateFormat.format(date)
+    }
 }

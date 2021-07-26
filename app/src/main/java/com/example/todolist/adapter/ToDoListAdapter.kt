@@ -16,11 +16,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.database.data.Task
-import com.example.todolist.databinding.FragmentTodoListBinding
 import com.example.todolist.databinding.RvItemTaskBinding
 import com.example.todolist.fragment.AddTaskFragmentDialog
-import com.example.todolist.viewmodel.ToDoListViewModel
-
 
 class ToDoListAdapter : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
 
@@ -43,10 +40,6 @@ class ToDoListAdapter : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
 
             binding.ibFinishToDoList.setOnClickListener {
                 binding.tvTaskToDoList.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG // 중단선 설정
-            }
-
-            binding.ibModifyToDoList.setOnClickListener {
-                AddTaskFragmentDialog().show((context as FragmentActivity).supportFragmentManager, "modifyTask")
             }
         }
 

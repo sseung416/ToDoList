@@ -21,11 +21,13 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddTaskFragmentDialog(private val application: Application) : DialogFragment() {
+class AddTaskFragmentDialog : DialogFragment() {
 
     init {
         dialog!!.setCancelable(false);
     }
+
+    private val application = requireActivity().application
 
     private val adapter = ColorPickerAdapter()
     private lateinit var viewModel: AddTaskViewModel

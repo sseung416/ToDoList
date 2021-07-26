@@ -48,7 +48,7 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    private val dialog = AddTaskFragmentDialog(application)
+    private val dialog = AddTaskFragmentDialog()
 
     fun onFinishBtnClick() {
         viewModelScope.launch {

@@ -14,7 +14,8 @@ import com.example.todolist.viewmodel.AddTaskViewModel
 import com.example.todolist.viewmodel.ToDoListViewModel
 
 
-class TodoListFragment(private val application: Application) : Fragment() {
+class TodoListFragment : Fragment() {
+    private val application = requireActivity().application
 
     private lateinit var viewModel: AddTaskViewModel
     private lateinit var binding: FragmentTodoListBinding
@@ -25,8 +26,8 @@ class TodoListFragment(private val application: Application) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
 
+        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
         return binding.root
     }

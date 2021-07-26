@@ -48,7 +48,7 @@ class ToDoListAdapter(private val application: Application) : RecyclerView.Adapt
             }
 
             binding.ibModifyToDoList.setOnClickListener {
-                AddTaskFragmentDialog(application).show((context as FragmentActivity).supportFragmentManager, "modifyTask")
+                AddTaskFragmentDialog().show((context as FragmentActivity).supportFragmentManager, "modifyTask")
             }
         }
     }

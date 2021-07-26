@@ -18,12 +18,16 @@ class CalendarFragmentDialog : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dialog!!.setCancelable(false);
+        requireDialog().setCancelable(false)
 
-        val rootView = inflater.inflate(R.layout.fragment_calendar_dialog, container, false)
+        return inflater.inflate(R.layout.fragment_calendar_dialog, container, false)
+    }
 
-        backBtn = rootView.findViewById(R.id.ib_back_calendar)
-        checkBtn = rootView.findViewById(R.id.ib_check_calendar)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        backBtn = view.findViewById(R.id.ib_back_calendar)
+        checkBtn = view.findViewById(R.id.ib_check_calendar)
 
         backBtn.setOnClickListener {
             dismiss()
@@ -31,8 +35,6 @@ class CalendarFragmentDialog : DialogFragment() {
         checkBtn.setOnClickListener {
             dismiss()
         }
-
-        return rootView
     }
 
 }

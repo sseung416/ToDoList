@@ -22,7 +22,7 @@ import com.example.todolist.fragment.AddTaskFragmentDialog
 import com.example.todolist.viewmodel.ToDoListViewModel
 
 
-class ToDoListAdapter(private val application: Application) : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
+class ToDoListAdapter : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
 
     private val list: ArrayList<Task> = ArrayList()
     private lateinit var binding: RvItemTaskBinding
@@ -35,20 +35,29 @@ class ToDoListAdapter(private val application: Application) : RecyclerView.Adapt
         v: View,
         private val context: Context,
         private val binding: RvItemTaskBinding,
-        private val application: Application
         ) : RecyclerView.ViewHolder(v) {
 
         fun binding(item: Task) {
             binding.tvTaskToDoList.text = item.content
-            binding.cvTaskToDoList.setBackgroundColor(ContextCompat.getColor(context, item.color))
+            binding.cvTaskToDoList.setBackgroundColor(ContextCompat.getColor(context, getColor(item.color)))
 
             binding.ibFinishToDoList.setOnClickListener {
-                // 완료 버튼 클릭시 중단선 설정
-                binding.tvTaskToDoList.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                binding.tvTaskToDoList.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG // 중단선 설정
             }
 
             binding.ibModifyToDoList.setOnClickListener {
                 AddTaskFragmentDialog().show((context as FragmentActivity).supportFragmentManager, "modifyTask")
+            }
+        }
+
+        private fun getColor(colorPos: Int): Int {
+            return when(colorPos) {
+                0 -> R.color.red
+                1 -> R.color.pink
+                2 -> R.color.yellow
+                3 -> R.color.green
+                4 -> R.color.grey
+                else -> R.color.light_grey
             }
         }
     }
@@ -56,7 +65,7 @@ class ToDoListAdapter(private val application: Application) : RecyclerView.Adapt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.rv_item_task, parent, false)
 
-        return ViewHolder(binding.root, parent.context, binding, application)
+        return ViewHolder(binding.root, parent.context, binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -72,4 +81,5 @@ class ToDoListAdapter(private val application: Application) : RecyclerView.Adapt
         this.list.addAll(list)
         notifyDataSetChanged()
     }
+
 }

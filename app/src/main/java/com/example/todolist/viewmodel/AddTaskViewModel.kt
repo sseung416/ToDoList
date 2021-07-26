@@ -24,7 +24,7 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
     private lateinit var newTask: Task
     private val repository = AddTaskRepository(application.applicationContext)
 
-    private lateinit var _tasks: MutableLiveData<List<Task>>
+    private var _tasks = MutableLiveData<List<Task>>()
     var tasks = _tasks
 
     fun addTask(content: String, selectedPos: Int) {
@@ -43,7 +43,7 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun getAllTask() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
            _tasks.postValue(repository.getAllTask())
         }
     }
@@ -51,7 +51,7 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
     private val dialog = AddTaskFragmentDialog()
 
     fun onFinishBtnClick() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             repository.insert(newTask)
         }
     }

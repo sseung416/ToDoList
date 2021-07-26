@@ -23,13 +23,9 @@ import java.util.*
 
 class AddTaskFragmentDialog : DialogFragment() {
 
-    init {
-        dialog!!.setCancelable(false);
-    }
+    private lateinit var application: Application
 
-    private val application = requireActivity().application
-
-    private val adapter = ColorPickerAdapter()
+    private lateinit var adapter: ColorPickerAdapter
     private lateinit var viewModel: AddTaskViewModel
     private lateinit var binding: FragmentAddTaskDialogBinding
 
@@ -37,9 +33,14 @@ class AddTaskFragmentDialog : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
+        application = requireActivity().application
+        adapter = ColorPickerAdapter()
 
+        requireDialog().setCancelable(false);
+
+        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_task_dialog, container, false)
+
         return binding.root
     }
 
@@ -51,9 +52,9 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         /* 시간이 있다면 ViewModel에서 SingleLiveEvent 사용해보기 */
         binding.ibFinishAddTask.setOnClickListener {
-            viewModel.addTask(binding.etContentAddTask.toString(), adapter.selectedPos)
+            viewModel.addTask(binding.etContentAddTask.text.toString(), adapter.selectedPos)
             viewModel.onFinishBtnClick()
-            dialog!!.dismiss()
+            requireDialog().dismiss()
         }
     }
 
@@ -64,4 +65,5 @@ class AddTaskFragmentDialog : DialogFragment() {
 
     private fun observe() {
     }
+
 }

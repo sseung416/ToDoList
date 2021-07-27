@@ -1,11 +1,11 @@
-package com.example.todolist
+package com.example.todolist.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.todolist.R
 import com.example.todolist.fragment.AddTaskFragmentDialog
-import com.example.todolist.fragment.CalendarFragmentDialog
 import com.example.todolist.fragment.TodoListFragment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dateTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.SplashTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

@@ -1,6 +1,10 @@
 package com.example.todolist.fragment
 
 import android.app.Application
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.SoundPool
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,9 +41,7 @@ class AddTaskFragmentDialog : DialogFragment() {
     ): View? {
         init()
 
-        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_task_dialog, container, false)
-
         return binding.root
     }
 
@@ -48,20 +50,16 @@ class AddTaskFragmentDialog : DialogFragment() {
 
         initRecyclerView()
 
-        binding.tvDateAddTask.text = getDate()
-
-        /* 시간이 있다면 ViewModel에서 SingleLiveEvent 사용해보기 */
-        binding.ibFinishAddTask.setOnClickListener {
-            viewModel.addTask(binding.etContentAddTask.text.toString(), adapter.selectedPos)
-            viewModel.onFinishBtnClick()
-            requireDialog().dismiss()
-        }
+        binding.tvDateAddTask.text = viewModel.getDate()
     }
 
     private fun init() {
         application = requireActivity().application
+        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
         adapter = ColorPickerAdapter()
-        toDoListAdapter = ToDoListAdapter()
+        toDoListAdapter = ToDoListAdapter(application)
+
+        binding.fragment = this
 
         requireDialog().setCancelable(false);
     }
@@ -71,10 +69,17 @@ class AddTaskFragmentDialog : DialogFragment() {
         binding.rvColorPickerAddTask.setHasFixedSize(true)
     }
 
-    private fun getDate(): String {
-        val date = Date(System.currentTimeMillis())
-        val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
-
-        return dateFormat.format(date)
+    fun onClick(view: View) {
+        when(view.id) {
+            binding.ibFinishAddTask.id -> {
+                viewModel.addTask(binding.etContentAddTask.text.toString(), adapter.selectedPos)
+                viewModel.insert()
+                requireDialog().dismiss()
+            }
+            binding.ibBackAddTask.id -> requireDialog().dismiss()
+            else -> Log.d("NONE", "onClick Event 없음")
+        }
     }
+
+
 }

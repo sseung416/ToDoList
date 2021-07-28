@@ -23,13 +23,9 @@ class TodoListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        application = requireActivity().application
+        init()
 
-        adapter = ToDoListAdapter()
-
-        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
-
         return binding.root
     }
 
@@ -39,6 +35,12 @@ class TodoListFragment : Fragment() {
         initRecyclerView()
         viewModel.getAllTask()
         observe()
+    }
+
+    private fun init() {
+        application = requireActivity().application
+        viewModel = ViewModelProvider(this, AddTaskViewModel.Factory(application))[AddTaskViewModel::class.java]
+        adapter = ToDoListAdapter(application)
     }
 
     private fun initRecyclerView() {
@@ -51,5 +53,4 @@ class TodoListFragment : Fragment() {
             adapter.setList(it)
         })
     }
-
 }

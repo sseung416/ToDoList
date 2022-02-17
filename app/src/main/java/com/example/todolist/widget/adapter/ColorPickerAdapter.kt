@@ -1,4 +1,4 @@
-package com.example.todolist.adapter
+package com.example.todolist.widget.adapter
 
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater

@@ -1,11 +1,10 @@
-package com.example.todolist.database
+package com.example.todolist.model
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.todolist.database.data.Task
+import com.example.todolist.model.data.Task
 
 @Dao
 interface TaskDAO {

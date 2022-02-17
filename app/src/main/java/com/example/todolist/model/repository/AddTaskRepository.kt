@@ -1,11 +1,10 @@
-package com.example.todolist.repository
+package com.example.todolist.model.repository
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LiveData
-import com.example.todolist.database.AppDatabase
-import com.example.todolist.database.TaskDAO
-import com.example.todolist.database.data.Task
+import com.example.todolist.model.AppDatabase
+import com.example.todolist.model.TaskDAO
+import com.example.todolist.model.data.Task
 
 class AddTaskRepository(private val context: Context) {
 

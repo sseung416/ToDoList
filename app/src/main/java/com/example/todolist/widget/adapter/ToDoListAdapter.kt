@@ -1,21 +1,16 @@
-package com.example.todolist.adapter
+package com.example.todolist.widget.adapter
 
 import android.app.Application
 import android.content.Context
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
-import com.example.todolist.database.data.Task
+import com.example.todolist.model.data.Task
 import com.example.todolist.databinding.RvItemTaskBinding
-import com.example.todolist.fragment.AddTaskFragmentDialog
-import com.example.todolist.generated.callback.OnClickListener
-import com.example.todolist.viewmodel.AddTaskViewModel
 
 class ToDoListAdapter(private val application: Application) : RecyclerView.Adapter<ToDoListAdapter.ViewHolder>() {
 

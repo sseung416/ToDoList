@@ -1,10 +1,10 @@
-package com.example.todolist.database
+package com.example.todolist.model
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.todolist.database.data.Task
+import com.example.todolist.model.data.Task
 
 @Database(entities = [Task::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {

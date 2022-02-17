@@ -5,13 +5,13 @@
     <data>
         <variable
             name="fragment"
-            type="com.example.todolist.fragment.AddTaskFragmentDialog" />
+            type="com.example.todolist.view.fragment.AddTaskFragmentDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:context=".fragment.AddTaskFragmentDialog">
+        tools:context=".view.fragment.AddTaskFragmentDialog">
 
         <androidx.cardview.widget.CardView
             android:layout_width="250dp"

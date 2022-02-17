@@ -1,8 +1,7 @@
-package com.example.todolist.database.data
+package com.example.todolist.model.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Date
 
 @Entity(tableName = "task")
 data class Task(

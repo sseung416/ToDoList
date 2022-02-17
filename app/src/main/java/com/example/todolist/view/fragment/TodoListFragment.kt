@@ -1,4 +1,4 @@
-package com.example.todolist.fragment
+package com.example.todolist.view.fragment
 
 import android.app.Application
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.R
-import com.example.todolist.adapter.ToDoListAdapter
+import com.example.todolist.widget.adapter.ToDoListAdapter
 import com.example.todolist.databinding.FragmentTodoListBinding
 import com.example.todolist.viewmodel.AddTaskViewModel
 

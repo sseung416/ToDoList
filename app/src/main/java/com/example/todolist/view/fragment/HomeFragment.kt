@@ -1,18 +1,14 @@
 package com.example.todolist.view.fragment
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.todolist.R
 import com.example.todolist.base.BaseFragment
 import com.example.todolist.databinding.FragmentHomeBinding
 import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.Todo
 import com.example.todolist.widget.adapter.GoalAdapter
+import com.example.todolist.widget.adapter.WeeklyAdapter
+import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override val viewModel: HomeViewModel
@@ -21,6 +17,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val goalAdapter = GoalAdapter()
 
     override fun init() {
+        binding.rvWeekly.adapter = WeeklyAdapter().apply {
+//            onClickDay = {
+//
+//            }
+        }
+
         goalAdapter.apply {
             binding.rvTodo.adapter = this
             onLongClickTodoList = onLongClickTodoList@ {

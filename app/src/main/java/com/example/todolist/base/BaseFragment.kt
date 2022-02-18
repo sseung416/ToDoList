@@ -14,7 +14,7 @@ import java.lang.StringBuilder
 import java.lang.reflect.ParameterizedType
 import java.util.*
 
-abstract class BaseFragment<VM: ViewModel, B: ViewDataBinding> : Fragment() {
+abstract class BaseFragment<B: ViewDataBinding, VM: ViewModel> : Fragment() {
     protected abstract val viewModel: VM
     protected lateinit var binding: B
 

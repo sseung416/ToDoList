@@ -1,4 +1,10 @@
 package com.example.todolist.di
 
-class App {
+import android.app.Application
+import com.example.todolist.model.AppDatabase
+
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+    }
 }

@@ -10,12 +10,16 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.example.todolist.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.StringBuilder
 import java.lang.reflect.ParameterizedType
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 abstract class BaseFragment<B: ViewDataBinding, VM: ViewModel> : Fragment() {
-    protected abstract val viewModel: VM
+    @Inject
+    protected lateinit var viewModel: VM
     protected lateinit var binding: B
 
     protected abstract fun init()

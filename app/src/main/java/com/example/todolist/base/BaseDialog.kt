@@ -13,12 +13,18 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
 import com.example.todolist.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.StringBuilder
 import java.lang.reflect.ParameterizedType
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 abstract class BaseDialog<B: ViewDataBinding, VM: ViewModel> : DialogFragment() {
-    protected abstract val viewModel: VM
+    @Inject
+    lateinit var mViewModel: VM
+
+    protected val viewModel: VM get() = mViewModel
     protected lateinit var binding: B
 
     protected abstract fun init()

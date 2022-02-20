@@ -1,7 +1,12 @@
 package com.example.todolist.model.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "goal")
 data class Goal(
-    val color: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val goal: String,
-    val todoList: List<Todo>
+    val color: Int,
+    val isCompleted: Boolean,
 )

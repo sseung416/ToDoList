@@ -15,7 +15,7 @@ data class Todo(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "goal_id") val goalId: Int,
     val todo: String,
-    val date: Date,
+    val date: String,
     val isCompleted: Boolean,
     val isRepeat: Boolean
 )

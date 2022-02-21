@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.todolist.R
-import com.example.todolist.view.fragment.AddTaskFragmentDialog
-import com.example.todolist.view.fragment.TodoListFragment
-import com.example.todolist.viewmodel.AddTaskViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,12 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         dateTextView.text = getDate()
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, TodoListFragment())
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.fragmentContainerView, TodoListFragment())
+//            .commit()
 
         addTaskBtn.setOnClickListener {
-            AddTaskFragmentDialog().show(supportFragmentManager, "addTask")
+//            AddTaskFragmentDialog().show(supportFragmentManager, "addTask")
         }
     }
 

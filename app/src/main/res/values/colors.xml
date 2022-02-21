@@ -8,13 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- color picker 색 -->
+    <!-- color picker -->
     <color name="red">#FFFF6262</color>
-    <color name="pink">#FFE67C73</color>
-    <color name="yellow">#FFF6BF26</color>
-    <color name="blue">#FF7986CB</color>
-    <color name="green">#FF33B679</color>
-    <color name="grey">#FF616161</color>
+    <color name="orange">#FFFFA800</color>
+    <color name="yellow">#FFFFC83A</color>
+    <color name="green1">#FF78CD4F</color>
+    <color name="green2">#FF578A52</color>
+    <color name="blue1">#FF66B6FF</color>
+    <color name="blue2">#FF4664FF</color>
+    <color name="purple">#FFBA7FF5</color>
+    <color name="pink">#FFFF8EB7</color>
+    <color name="grey2">#FF9B9B9B</color>
 
-    <color name="light_grey">#FFD3D3D3</color>
+    <color name="grey1">#FFC6C6C6</color>
 </resources>

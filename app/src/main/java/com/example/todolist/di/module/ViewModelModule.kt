@@ -15,11 +15,11 @@ import javax.inject.Singleton
 class ViewModelModule {
     @Singleton
     @Provides
-    fun provideCreateGoalViewModel() = CreateGoalViewModel()
+    fun provideCreateGoalViewModel(goalRepository: GoalRepository) =
+        CreateGoalViewModel(goalRepository)
 
     @Singleton
     @Provides
     fun provideHomeViewModel(goalRepository: GoalRepository, todoRepository: TodoRepository) =
         HomeViewModel(goalRepository, todoRepository)
-
 }

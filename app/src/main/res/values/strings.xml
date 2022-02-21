@@ -5,4 +5,7 @@
     <string name="today">Today</string>
     <string name="input">Input Task.</string>
     <string name="date_ex">May 00, 0000</string>
+    <string name="edit">수정</string>
+    <string name="delete">삭제</string>
+    <string name="tomorrow">내일 하기</string>
 </resources>

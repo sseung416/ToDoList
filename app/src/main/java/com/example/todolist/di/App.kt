@@ -2,9 +2,7 @@ package com.example.todolist.di
 
 import android.app.Application
 import com.example.todolist.model.AppDatabase
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application() {
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+@HiltAndroidApp
+class App : Application()

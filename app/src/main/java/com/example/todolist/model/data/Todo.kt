@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.sql.Date
 
 @Entity(foreignKeys = [ForeignKey(
     entity = Goal::class,
@@ -14,8 +13,8 @@ import java.sql.Date
 data class Todo(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "goal_id") val goalId: Int,
-    val todo: String,
-    val date: String,
-    val isCompleted: Boolean,
-    val isRepeat: Boolean
+    var todo: String,
+    var date: String,
+    var isCompleted: Boolean,
+    var isRepeat: Boolean
 )

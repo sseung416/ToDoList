@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog"
+        tools:context=".view.dialog.HomeEditDialog">
+
+        <ImageButton
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/ic_circle_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/ic_circle_close"
+            app:layout_constraintStart_toEndOf="@+id/btn_edit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_tomorrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/ic_circle_next"
+            app:layout_constraintStart_toEndOf="@+id/btn_delete"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/ic_circle_repeat"
+            app:layout_constraintStart_toEndOf="@+id/btn_tomorrow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/SmallTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            app:layout_constraintEnd_toEndOf="@+id/btn_edit"
+            app:layout_constraintStart_toStartOf="@+id/btn_edit"
+            app:layout_constraintTop_toBottomOf="@+id/btn_edit" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/SmallTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="@string/delete"
+            app:layout_constraintEnd_toStartOf="@+id/btn_tomorrow"
+            app:layout_constraintStart_toEndOf="@+id/btn_edit"
+            app:layout_constraintStart_toStartOf="@+id/btn_delete"
+            app:layout_constraintTop_toBottomOf="@+id/btn_delete" />
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/SmallTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tomorrow"
+            app:layout_constraintEnd_toEndOf="@+id/btn_tomorrow"
+            app:layout_constraintStart_toStartOf="@+id/btn_tomorrow"
+            app:layout_constraintTop_toBottomOf="@+id/btn_tomorrow" />
+
+        <TextView
+            android:id="@+id/textView6"
+            style="@style/SmallTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="반복"
+            app:layout_constraintEnd_toEndOf="@+id/btn_repeat"
+            app:layout_constraintStart_toStartOf="@+id/btn_repeat"
+            app:layout_constraintTop_toBottomOf="@+id/btn_repeat" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

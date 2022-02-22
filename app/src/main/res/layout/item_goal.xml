@@ -13,7 +13,6 @@
         android:clickable="false"
         android:focusable="false"
         android:fontFamily="@font/imhyemin_bold"
-        android:text="안녕하세유~~~"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"

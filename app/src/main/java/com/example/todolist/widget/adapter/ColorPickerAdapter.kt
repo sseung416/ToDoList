@@ -10,28 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 
 class ColorPickerAdapter : RecyclerView.Adapter<ColorPickerAdapter.ViewHolder>() {
-
-    private lateinit var onClickColorPickerListener: OnClickColorPickerListener
-
-    interface OnClickColorPickerListener {
-        fun onClick(position: Int)
-    }
-
-    fun setOnClickColorPickerListener(listener: (Int) -> Unit) {
-        onClickColorPickerListener = object : OnClickColorPickerListener {
-            override fun onClick(position: Int) {
-                listener(position)
-            }
-        }
-    }
+    var onClickColor: (()->Unit)? = null
 
     private val colors = listOf(
         (R.color.red),
         (R.color.pink),
         (R.color.yellow),
-        (R.color.green),
-        (R.color.blue),
-        (R.color.grey),
+//        (R.color.green),
+//        (R.color.blue),
+//        (R.color.grey),
     )
 
     init {

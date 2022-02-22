@@ -1,32 +1,36 @@
 package com.example.todolist.widget.adapter
 
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.databinding.ItemColorBinding
-import com.example.todolist.model.data.Goal
 
 class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
+
     private val colors = listOf(
         R.color.red, R.color.orange, R.color.yellow, R.color.green1, R.color.green2,
         R.color.blue1, R.color.blue2, R.color.purple, R.color.pink, R.color.grey2
     )
 
-    private var selectedPosition = -1
+    private var selectedPosition = 0
 
     inner class ViewHolder(
         private val binding: ItemColorBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(color: Int, position: Int) {
-            binding.btnColor.setColorFilter(color)
+            binding.btnColor.setColorFilter(ContextCompat.getColor(binding.btnColor.context, color), PorterDuff.Mode.SRC_IN)
 
             binding.btnColor.setOnClickListener {
                 binding.ivChecked.visibility = VISIBLE
-                if (selectedPosition != -1 && selectedPosition != position) notifyItemChanged(selectedPosition)
-                selectedPosition = position
+                if (selectedPosition != position) {
+                    notifyItemChanged(selectedPosition)
+                    selectedPosition = position
+                }
             }
 
             binding.ivChecked.visibility = INVISIBLE

@@ -9,17 +9,17 @@ import com.example.todolist.model.data.Todo
 class TodoAdapter : RecyclerView.Adapter<TodoAdapter.ViewHolder>() {
     private val list = arrayListOf<Todo>()
 
-    var onLongClickTodo: ((Int)->Boolean)? = null
+    var onLongClickTodo: ((Todo)->Boolean)? = null
 
     inner class ViewHolder(
         private val binding: ItemTodoBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Todo, position: Int) {
+        fun bind(data: Todo) {
             binding.checkBox.apply {
-                isChecked = data.isChecked
+                isChecked = data.isCompleted
                 text = data.todo
                 setOnLongClickListener {
-                    onLongClickTodo?.invoke(position)!!
+                    onLongClickTodo?.invoke(data)!!
                 }
              }
         }
@@ -30,7 +30,7 @@ class TodoAdapter : RecyclerView.Adapter<TodoAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], position)
+        holder.bind(list[position])
     }
 
     override fun getItemCount(): Int = list.size

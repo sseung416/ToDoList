@@ -40,7 +40,7 @@ abstract class BaseDialog<B: ViewDataBinding, VM: ViewModel> : DialogFragment() 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return Dialog(requireContext()).apply {
-            this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
 

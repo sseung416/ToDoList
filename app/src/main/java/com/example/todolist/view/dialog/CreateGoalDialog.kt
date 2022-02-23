@@ -1,6 +1,7 @@
 package com.example.todolist.view.dialog
 
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.todolist.R
 import com.example.todolist.base.BaseDialog
 import com.example.todolist.databinding.DialogCreateGoalBinding
@@ -11,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateGoalDialog : BaseDialog<DialogCreateGoalBinding, CreateGoalViewModel>() {
+    override val viewModel: CreateGoalViewModel by activityViewModels()
     private val colorAdapter = ColorAdapter()
 
     override fun init() {
@@ -29,9 +31,7 @@ class CreateGoalDialog : BaseDialog<DialogCreateGoalBinding, CreateGoalViewModel
 
     override fun observerViewModel() {
         with (viewModel) {
-            insertSuccessEvent.observe(viewLifecycleOwner) {
-                // observe 할 필요가 잇을까
-            }
+            insertSuccessEvent.observe(viewLifecycleOwner) {}
         }
     }
 

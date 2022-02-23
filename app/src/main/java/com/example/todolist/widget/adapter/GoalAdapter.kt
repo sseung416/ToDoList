@@ -2,37 +2,45 @@ package com.example.todolist.widget.adapter
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ItemGoalBinding
-import com.example.todolist.model.data.Goal
+import com.example.todolist.model.data.GoalAndAllTodos
 import com.example.todolist.model.data.Todo
+import com.example.todolist.viewmodel.fragment.HomeViewModel
 
-class GoalAdapter : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
+class GoalAdapter(
+    private val homeViewModel: HomeViewModel
+) : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
     var onLongClickTodoList: ((Todo)->Boolean)? = null
-    var onClickAdd: ((Goal)->Unit)? = null
 
-    private val list = arrayListOf<Goal>()
+    private val list = arrayListOf<GoalAndAllTodos>()
 
     inner class ViewHolder(
         private val binding: ItemGoalBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Goal) {
+        fun bind(data: GoalAndAllTodos) {
+            val goal = data.goal!!
+            val todoAdapter = TodoAdapter(homeViewModel)
+
             binding.btnGoal.apply {
-                text = data.goal
-                backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, data.color))
+                text = goal.goal
+                backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, goal.color))
             }
 
             binding.btnAdd.apply {
-                setColorFilter(ContextCompat.getColor(context, data.color), PorterDuff.Mode.SRC_IN)
-                setOnClickListener { onClickAdd?.invoke(data) }
+                setColorFilter(ContextCompat.getColor(context, goal.color), PorterDuff.Mode.SRC_IN)
+                setOnClickListener {
+                    todoAdapter.addTodo(goal)
+                }
             }
 
-            binding.rvTodo.adapter = TodoAdapter().apply {
+            binding.rvTodo.adapter = todoAdapter.apply {
                 onLongClickTodo = onLongClickTodoList
-//                setList(data.todoList)
+                setList(data.todos)
             }
         }
     }
@@ -47,7 +55,7 @@ class GoalAdapter : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = list.size
 
-    fun setList(list: List<Goal>) {
+    fun setList(list: List<GoalAndAllTodos>) {
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()

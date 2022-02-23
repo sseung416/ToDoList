@@ -16,12 +16,9 @@ import com.example.todolist.R
 import java.lang.StringBuilder
 import java.lang.reflect.ParameterizedType
 import java.util.*
-import javax.inject.Inject
 
 abstract class BaseDialog<B: ViewDataBinding, VM: ViewModel> : DialogFragment() {
-    @Inject lateinit var mViewModel: VM
-
-    protected val viewModel: VM get() = mViewModel
+    abstract val viewModel: VM
     protected lateinit var binding: B
 
     protected abstract fun init()

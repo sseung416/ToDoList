@@ -11,7 +11,6 @@ import com.example.todolist.R
 import com.example.todolist.databinding.ItemColorBinding
 
 class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
-
     private val colors = listOf(
         R.color.red, R.color.orange, R.color.yellow, R.color.green1, R.color.green2,
         R.color.blue1, R.color.blue2, R.color.purple, R.color.pink, R.color.grey2

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/checkBox"
+        style="@style/RegularTextView"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:clickable="false"
+        android:button="@drawable/selector_checkbox_todo" />
+
+    <EditText
+        android:id="@+id/et_todo"
+        style="@style/RegularTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="textPersonName" />
+</LinearLayout>

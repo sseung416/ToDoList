@@ -1,9 +1,7 @@
 package com.example.todolist.model.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.example.todolist.widget.adapter.TodoAdapter
 
 @Entity(foreignKeys = [ForeignKey(
     entity = Goal::class,
@@ -11,10 +9,12 @@ import androidx.room.PrimaryKey
     childColumns = arrayOf("goal_id")
 )])
 data class Todo(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     @ColumnInfo(name = "goal_id") val goalId: Int,
-    var todo: String,
+    var todo: String = "",
     var date: String,
-    var isCompleted: Boolean,
-    var isRepeat: Boolean
-)
+    var isCompleted: Boolean = false,
+    var isRepeat: Boolean = false,
+) {
+    @Ignore var type: Int = TodoAdapter.TEXT
+}

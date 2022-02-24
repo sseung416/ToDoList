@@ -19,18 +19,12 @@ class HomeViewModel @Inject constructor(
     lateinit var list: List<Int>
 
     fun getGoalAndTodosByDate(date: String) {
-        addDisposable(goalRepository.allGoalIds, { list = it as List<Int> }, {})
+//        addDisposable(goalRepository.allGoalIds, { list = it as List<Int> }, {})
 
         addDisposable(goalRepository.getGoalAndTodosByDate(date), {
-            (it as List<GoalAndAllTodos>).forEach { it ->
-                Log.e(TAG, "getGoalAndTodosByDate: ${it.goal}")
-                it.todos.forEach { i ->
-                    Log.e(TAG, i.toString())
-                }
-            }
             isSuccessGetGoalAndTodosByDate.postValue(it as List<GoalAndAllTodos>)
         }, {
-            Log.e(TAG, "getGoalAndAllTodos: ${it?.message}", )
+            Log.e(TAG, "getGoalAndAllTodos: ${it.message}", )
         })
     }
 

@@ -3,29 +3,28 @@ package com.example.todolist.base
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.observers.DisposableCompletableObserver
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subscribers.DisposableSubscriber
 
 abstract class BaseViewModel : ViewModel() {
     private val disposable = CompositeDisposable( )
 
-    protected fun addDisposable(flowable: Flowable<*>, nextListener: (Any)->Unit, failListener: (Throwable?)->Unit) {
-        disposable.add(flowable.subscribeOn(Schedulers.io())
+    protected fun addDisposable(single: Single<*>, successListener: (Any)->Unit, errorListener: (Throwable)->Unit) {
+        disposable.add(single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableSubscriber<Any>() {
-                override fun onNext(t: Any) {
-                    nextListener(t)
+            .subscribeWith(object : DisposableSingleObserver<Any>() {
+                override fun onSuccess(t: Any) {
+                    successListener(t)
                 }
 
-                override fun onError(t: Throwable?) {
-                    failListener(t)
+                override fun onError(e: Throwable) {
+                    errorListener(e)
                 }
-
-                override fun onComplete() {}
-            }))
+            }) as Disposable)
     }
 
     protected fun addDisposable(completable: Completable, completeListener: ()->Unit, errorListener: (Throwable)->Unit) {
@@ -39,7 +38,7 @@ abstract class BaseViewModel : ViewModel() {
                 override fun onError(e: Throwable) {
                     errorListener(e)
                 }
-            }))
+            }) as Disposable)
     }
 
     override fun onCleared() {

@@ -2,7 +2,6 @@ package com.example.todolist.widget.adapter
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -23,7 +22,7 @@ class GoalAdapter(
         private val binding: ItemGoalBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: GoalAndAllTodos) {
-            val goal = data.goal!!
+            val goal = data.goal
             val todoAdapter = TodoAdapter(homeViewModel)
 
             binding.btnGoal.apply {

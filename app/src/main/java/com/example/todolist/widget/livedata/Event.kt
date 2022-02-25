@@ -4,7 +4,7 @@ import androidx.lifecycle.Observer
 
 open class Event<out T>(private val content: T) {
     var hasBeenHandle = false
-    private set
+        private set
 
     fun getContentIfNotHandled(): T? =
         if (hasBeenHandle) {

@@ -7,6 +7,6 @@ import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface TodoDao : BaseDao<Todo> {
-    @Query("SELECT * FROM todo WHERE goal_id = :goalId AND date = :date")
-    fun getTodosByDate(goalId:Int, date: String): Single<List<Todo>>
+    @Query("SELECT * FROM todo WHERE date = :date ORDER BY id")
+    fun getTodosByDate(date: String): Single<List<Todo>>
 }

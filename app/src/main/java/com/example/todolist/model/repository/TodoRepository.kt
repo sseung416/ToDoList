@@ -9,7 +9,7 @@ import javax.inject.Inject
 class TodoRepository @Inject constructor(
     override val dao: TodoDao
 ) : BaseRepository<TodoDao, Todo>() {
-    fun getTodosByDate(goalId: Int, date: String) = dao.getTodosByDate(goalId, date)
+    fun getTodosByDate(date: String) = dao.getTodosByDate(date)
 
     override fun insert(obj: Todo): Completable = dao.insert(obj)
 

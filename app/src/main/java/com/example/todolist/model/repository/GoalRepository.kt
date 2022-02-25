@@ -11,10 +11,6 @@ class GoalRepository @Inject constructor(
 ) : BaseRepository<GoalDao, Goal>() {
     val allGoals = dao.getGoalList()
 
-    val allGoalIds = dao.getGoalIds()
-
-    fun getGoalAndTodosByDate(date: String) = dao.getGoalAndTodosByDate(date)
-
     override fun insert(obj: Goal): Completable = dao.insert(obj)
 
     override fun update(obj: Goal): Completable = dao.update(obj)

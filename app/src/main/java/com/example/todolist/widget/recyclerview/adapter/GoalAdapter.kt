@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ItemGoalBinding
+import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.GoalAndAllTodos
 import com.example.todolist.model.data.Todo
 import com.example.todolist.viewmodel.fragment.HomeViewModel
@@ -58,5 +59,10 @@ class GoalAdapter(
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun addItem(goal: Goal) {
+        list.add(GoalAndAllTodos(goal, listOf()))
+        notifyItemChanged(list.lastIndex)
     }
 }

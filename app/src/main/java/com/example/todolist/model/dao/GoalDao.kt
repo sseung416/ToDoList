@@ -13,4 +13,7 @@ import io.reactivex.rxjava3.core.Single
 interface GoalDao : BaseDao<Goal> {
     @Query("SELECT * FROM goal")
     fun getGoalList(): Single<List<Goal>>
+
+    @Query("SELECT * FROM goal WHERE id = :id")
+    fun getGoalById(id: Int): Single<Goal>
 }

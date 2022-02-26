@@ -9,6 +9,7 @@ import com.example.todolist.model.repository.GoalRepository
 import com.example.todolist.model.repository.TodoRepository
 import com.example.todolist.widget.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
+import retrofit2.internal.EverythingIsNonNull
 import java.util.*
 import javax.inject.Inject
 
@@ -20,6 +21,7 @@ class HomeViewModel @Inject constructor(
     val selectedDate = MutableLiveData<Event<Calendar>>(Event(Calendar.getInstance()))
 
     val allGoalList = MutableLiveData<Event<List<Goal>>>()
+    val goalById = MutableLiveData<Event<Goal>>()
     val todoListByDate = MutableLiveData<Event<List<Todo>>>()
 
     fun getAllGoals() {
@@ -27,6 +29,14 @@ class HomeViewModel @Inject constructor(
             allGoalList.postValue(Event(it as List<Goal>))
         }, {
             Log.e(TAG, "getAllGoals: ${it.message}", )
+        })
+    }
+
+    fun getGoalById(id: Int) {
+        addDisposable(goalRepository.getGoalById(id), {
+            goalById.postValue(Event(it as Goal))
+        }, {
+            Log.e(TAG, "getGoalById: ${it.message}")
         })
     }
 

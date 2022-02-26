@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.example.todolist.BR
 import com.example.todolist.R
 import java.lang.StringBuilder
 import java.lang.reflect.ParameterizedType
@@ -44,7 +45,7 @@ abstract class BaseFragment<B: ViewDataBinding, VM: ViewModel> : Fragment() {
     private fun performDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, getLayoutRes(), container,false)
         binding.lifecycleOwner = viewLifecycleOwner
-//        binding.setVariable()
+        binding.setVariable(BR.vm, viewModel)
         binding.executePendingBindings()
     }
 

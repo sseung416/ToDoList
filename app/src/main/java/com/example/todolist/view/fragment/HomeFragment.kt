@@ -4,6 +4,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.todolist.base.BaseFragment
 import com.example.todolist.databinding.FragmentHomeBinding
 import com.example.todolist.model.data.GoalAndAllTodos
+import com.example.todolist.model.data.Todo
 import com.example.todolist.view.dialog.CreateGoalDialog
 import com.example.todolist.view.dialog.HomeEditDialog
 import com.example.todolist.viewmodel.dialog.CreateGoalViewModel
@@ -33,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         binding.rvWeekly.adapter = WeeklyAdapter().apply {
             onClickDay = {
-                viewModel.selectedDate.postValue(Event(it))
+                viewModel.selectedDate.value = Event(it)
             }
         }
 
@@ -47,18 +48,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     override fun observeViewModel() {
         with (viewModel) {
-            getAllGoalsEvent.observe(viewLifecycleOwner, EventObserver {
+            allGoalList.observe(viewLifecycleOwner, EventObserver {
                 repeat(it.size) { getTodosByDate(selectedDate.value!!.peekContent().time.formatToString()) }
             })
 
-            getTodosByDateEvent.observe(viewLifecycleOwner, EventObserver {
-                val list = arrayListOf<GoalAndAllTodos>()
-                val todoMap = it.groupBy { todo -> todo.goalId }
-                getAllGoalsEvent.value?.peekContent()?.forEach { goal ->
-                    list.add(GoalAndAllTodos(goal, todoMap[goal.id]?: listOf()))
-                }
+            todoListByDate.observe(viewLifecycleOwner, EventObserver {
+                goalAdapter.setList(convertGoalAndAllTodosList(it))
+            })
 
-                goalAdapter.setList(list)
+            selectedDate.observe(viewLifecycleOwner, EventObserver { cal ->
+                repeat(allGoalList.value?.peekContent()?.size?: 0) { getTodosByDate(cal.time.formatToString()) }
             })
         }
 
@@ -69,4 +68,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         homeEditViewModel.editEvent.observe(viewLifecycleOwner) {
         }
     }
+
+    private fun convertGoalAndAllTodosList(list: List<Todo>): List<GoalAndAllTodos> =
+        arrayListOf<GoalAndAllTodos>().apply {
+            val todoMap = list.groupBy { todo -> todo.goalId }
+            viewModel.allGoalList.value?.peekContent()?.forEach { goal ->
+                this.add(GoalAndAllTodos(goal, todoMap[goal.id]?: listOf()))
+            }
+        }
 }

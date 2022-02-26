@@ -7,7 +7,7 @@ import com.example.todolist.base.BaseDialog
 import com.example.todolist.databinding.DialogCreateGoalBinding
 import com.example.todolist.model.data.Goal
 import com.example.todolist.viewmodel.dialog.CreateGoalViewModel
-import com.example.todolist.widget.adapter.ColorAdapter
+import com.example.todolist.widget.recyclerview.adapter.ColorAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="vm"
+            type="com.example.todolist.viewmodel.fragment.HomeViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,10 +20,11 @@
             style="@style/TitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:dateText="@{vm.selectedDate.peekContent()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="2022년 2월 18일" />
+            tools:text="2022년 3월 15일"/>
 
         <ImageButton
             android:id="@+id/btn"

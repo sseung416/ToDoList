@@ -1,4 +1,4 @@
-package com.example.todolist.widget.adapter
+package com.example.todolist.widget.recyclerview.adapter
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
@@ -44,11 +44,11 @@ class GoalAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoalAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemGoalBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    override fun onBindViewHolder(holder: GoalAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
     }
 

@@ -1,4 +1,4 @@
-package com.example.todolist.widget.adapter
+package com.example.todolist.widget.recyclerview.adapter
 
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -44,7 +44,7 @@ class TodoAdapter(
                         viewModel.insertTodo(
                             Todo(goalId = todo.goalId, todo = text.toString(), date = todo.date)
                         )
-                        list[list.lastIndex].type = TEXT
+                        list[list.lastIndex].type = OUTPUT
                         notifyItemChanged(list.lastIndex)
                         true
                     } else false
@@ -94,7 +94,7 @@ class TodoAdapter(
     }
 
     companion object {
-        const val TEXT = 0
+        const val OUTPUT = 0
         private const val INPUT = 1
     }
 }

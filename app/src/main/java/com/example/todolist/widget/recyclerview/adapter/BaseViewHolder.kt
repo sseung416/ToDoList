@@ -1,4 +1,4 @@
-package com.example.todolist.widget.adapter
+package com.example.todolist.widget.recyclerview.adapter
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

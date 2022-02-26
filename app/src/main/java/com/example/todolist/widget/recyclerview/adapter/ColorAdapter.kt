@@ -1,4 +1,4 @@
-package com.example.todolist.widget.adapter
+package com.example.todolist.widget.recyclerview.adapter
 
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.databinding.ItemColorBinding
+import com.example.todolist.widget.extension.getColor
 
 class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
     private val colors = listOf(
@@ -22,13 +23,14 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
         private val binding: ItemColorBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(color: Int, position: Int) {
-            binding.btnColor.setColorFilter(ContextCompat.getColor(binding.btnColor.context, color), PorterDuff.Mode.SRC_IN)
-
-            binding.btnColor.setOnClickListener {
-                binding.ivChecked.visibility = VISIBLE
-                if (selectedPosition != position) {
-                    notifyItemChanged(selectedPosition)
-                    selectedPosition = position
+            binding.btnColor.apply {
+                setColorFilter(color.getColor(context), PorterDuff.Mode.SRC_IN)
+                setOnClickListener {
+                    binding.ivChecked.visibility = VISIBLE
+                    if (selectedPosition != position) {
+                        notifyItemChanged(selectedPosition)
+                        selectedPosition = position
+                    }
                 }
             }
 

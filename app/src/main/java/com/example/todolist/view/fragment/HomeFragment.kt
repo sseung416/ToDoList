@@ -52,16 +52,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 repeat(it.size) { getTodosByDate(selectedDate.value!!.peekContent().time.formatToString()) }
             })
 
-            goalById.observe(viewLifecycleOwner, EventObserver {
-                goalAdapter.addItem(it)
-            })
-
             todoListByDate.observe(viewLifecycleOwner, EventObserver {
                 goalAdapter.setList(convertGoalAndAllTodosList(it))
             })
 
             selectedDate.observe(viewLifecycleOwner, EventObserver { cal ->
                 repeat(allGoalList.value?.peekContent()?.size?: 0) { getTodosByDate(cal.time.formatToString()) }
+                goalAdapter.date = cal.time.formatToString()
             })
         }
 

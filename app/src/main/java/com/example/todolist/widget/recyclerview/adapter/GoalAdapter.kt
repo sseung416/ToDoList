@@ -11,11 +11,14 @@ import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.GoalAndAllTodos
 import com.example.todolist.model.data.Todo
 import com.example.todolist.viewmodel.fragment.HomeViewModel
+import com.example.todolist.widget.extension.formatToString
+import java.util.*
 
 class GoalAdapter(
     private val homeViewModel: HomeViewModel
 ) : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
     var onLongClickTodoList: ((Todo)->Boolean)? = null
+    var date: String = Calendar.getInstance().time.formatToString()
 
     private val list = arrayListOf<GoalAndAllTodos>()
 
@@ -34,7 +37,7 @@ class GoalAdapter(
             binding.btnAdd.apply {
                 setColorFilter(ContextCompat.getColor(context, goal.color), PorterDuff.Mode.SRC_IN)
                 setOnClickListener {
-                    todoAdapter.addTodo(goal)
+                    todoAdapter.addTodo(goal, date?: "")
                 }
             }
 

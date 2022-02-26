@@ -41,10 +41,11 @@ class TodoAdapter(
                 requestFocus()
                 setOnKeyListener { _, keyCode, event ->
                     return@setOnKeyListener if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                        viewModel.insertTodo(
-                            Todo(goalId = todo.goalId, todo = text.toString(), date = todo.date)
-                        )
-                        list[list.lastIndex].type = OUTPUT
+                        Todo(goalId = todo.goalId, todo = text.toString(), date = todo.date).apply {
+                            viewModel.insertTodo(this)
+                            this.type = OUTPUT
+                            list[list.lastIndex] = this
+                        }
                         notifyItemChanged(list.lastIndex)
                         true
                     } else false
@@ -78,9 +79,7 @@ class TodoAdapter(
         notifyDataSetChanged()
     }
 
-    fun addTodo(goal: Goal) {
-        // todo 다른 날에 투두를 설정 할 수 있으니 다른 날짜의 date 가져올 수 있게 새로 짜기 (지금은 테스트)
-        val date = "20220222"
+    fun addTodo(goal: Goal, date: String) {
         val todo = Todo(goalId = goal.id!!, date = date).apply { type = INPUT }
         list.add(todo)
         notifyItemInserted(list.lastIndex)

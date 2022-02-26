@@ -1,7 +1,7 @@
 package com.example.todolist.model.data
 
 import androidx.room.*
-import com.example.todolist.widget.adapter.TodoAdapter
+import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
 
 @Entity(foreignKeys = [ForeignKey(
     entity = Goal::class,
@@ -16,5 +16,6 @@ data class Todo(
     var isCompleted: Boolean = false,
     var isRepeat: Boolean = false,
 ) {
-    @Ignore var type: Int = TodoAdapter.TEXT
+    // 할일을 출력하는 OUTPUT 타입과 할일을 입력하는 INPUT 타입이 있음
+    @Ignore var type: Int = TodoAdapter.OUTPUT
 }

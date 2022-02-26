@@ -1,8 +1,5 @@
 package com.example.todolist.widget.recyclerview.adapter
 
-import android.graphics.drawable.ColorDrawable
-import android.util.Log
-import android.view.Gravity.apply
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
-    var onClickDay: ((Int, Int)->Unit)? = null
+    var onClickDay: ((Calendar)->Unit)? = null
 
     private var selectedPosition = 0
 
@@ -22,17 +19,22 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             binding.tvDay.text = getToday(position)
-            binding.tvDate.text = getTodayDate(position)
+            binding.tvDate.text = getTodayDate(position).toString()
 
             binding.btnDay.setOnClickListener {
                 if (selectedPosition != position) {
-                    binding.tvDay.apply { setTextColor((R.color.black).getColor(context)) }
-                    binding.tvDate.apply { setTextColor((R.color.black).getColor(context)) }
-                    binding.btnDay.apply { setColorFilter((R.color.black).getColor(context)) }
+                    setViewColor(R.color.black)
+                    notifyItemChanged(selectedPosition)
+                    selectedPosition = position
                 }
-//                onClickDay?.invoke()
+                onClickDay?.invoke(getCalendar(getTodayDate(position)))
             }
+
+            setViewColor(R.color.grey2)
         }
+
+        private fun getCalendar(date: Int): Calendar =
+            Calendar.getInstance().apply { this.set(Calendar.DATE, date) }
 
         private fun getToday(position: Int): String =
             when (position + 2) {
@@ -45,12 +47,23 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
                 else -> "일"
             }
 
-        private fun getTodayDate(position: Int): String {
+        private fun getTodayDate(position: Int): Int {
             val today = Calendar.getInstance()
-            val dayNum = if ((position+2) == 8) 1 else position+2
+            var dayNum = position + 2
+
+            if (dayNum == 8) {
+                today.add(Calendar.DAY_OF_WEEK, 7)
+                dayNum = 1
+            }
 
             today.set(Calendar.DAY_OF_WEEK, dayNum)
-            return SimpleDateFormat("dd").format(today.time)
+            return SimpleDateFormat("d").format(today.time).toInt()
+        }
+
+        private fun setViewColor(color: Int) {
+            binding.tvDay.apply { setTextColor(color.getColor(context)) }
+            binding.tvDate.apply { setTextColor(color.getColor(context)) }
+            binding.btnDay.apply { setColorFilter(color.getColor(context)) }
         }
     }
 

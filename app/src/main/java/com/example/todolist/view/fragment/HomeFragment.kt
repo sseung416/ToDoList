@@ -16,11 +16,10 @@ import com.example.todolist.widget.extension.formatToString
 import com.example.todolist.widget.livedata.Event
 import com.example.todolist.widget.livedata.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
-    @Inject lateinit var homeEditViewModel: HomeEditViewModel
+    private val homeEditViewModel: HomeEditViewModel by activityViewModels()
     private val createGoalViewModel: CreateGoalViewModel by activityViewModels()
 
     private val goalAdapter by lazy { GoalAdapter(viewModel) }
@@ -63,10 +62,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
 
         createGoalViewModel.insertSuccessEvent.observe(viewLifecycleOwner) {
-            viewModel.getAllGoals()
+            viewModel.getAllGoals() // todo 모든 데이터 조회하기보다 생성한 목표의 id로 가져오기로 바꾸자
         }
 
-        homeEditViewModel.editEvent.observe(viewLifecycleOwner) {
+        with (homeEditViewModel) {
+            editEvent.observe(viewLifecycleOwner) {
+
+            }
+
+            deleteEvent.observe(viewLifecycleOwner) {
+                viewModel.getAllGoals()
+            }
         }
     }
 

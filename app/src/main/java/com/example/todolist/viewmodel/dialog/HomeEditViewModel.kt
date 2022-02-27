@@ -13,15 +13,32 @@ class HomeEditViewModel @Inject constructor(
     private val todoRepository: TodoRepository
 ) : BaseViewModel() {
     val editEvent = SingleLiveEvent<Unit>()
+    val deleteEvent = SingleLiveEvent<Unit>()
+    val tomorrowEvent = SingleLiveEvent<Unit>()
+    val repeatEvent = SingleLiveEvent<Unit>()
 
     fun updateTodo(todo: Todo) {
-        addDisposable(todoRepository.update(todo), {}, {
+        addDisposable(todoRepository.update(todo), {
+            editEvent.call()
+        }, {
             Log.e(TAG, "updateTodo: $it")
         })
     }
 
     fun deleteTodo(todo: Todo) {
-        addDisposable(todoRepository.delete(todo), {}, {})
+        addDisposable(todoRepository.delete(todo), {
+            deleteEvent.call()
+        }, {
+            Log.e(TAG, "deleteTodo: ${it.message}")
+        })
+    }
+
+    fun tomorrow() {
+
+    }
+
+    fun repeatTodo(todo: Todo) {
+
     }
 
     companion object { private const val TAG = "HomeEditViewModel" }

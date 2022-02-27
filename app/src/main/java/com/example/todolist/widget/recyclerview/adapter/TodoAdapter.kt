@@ -9,10 +9,11 @@ import com.example.todolist.databinding.ItemTodoBinding
 import com.example.todolist.databinding.ItemTodoInputBinding
 import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.Todo
+import com.example.todolist.viewmodel.dialog.HomeEditViewModel
 import com.example.todolist.viewmodel.fragment.HomeViewModel
 
 class TodoAdapter(
-    private val viewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = arrayListOf<Todo>()
 
@@ -27,7 +28,7 @@ class TodoAdapter(
                 text = data.todo
                 setOnLongClickListener { onLongClickTodo?.invoke(data)!! }
                 setOnCheckedChangeListener { _, _ ->
-                    viewModel.updateTodo(data.apply { isCompleted = true })
+                    homeViewModel.updateTodo(data.apply { isCompleted = true })
                 }
              }
         }
@@ -42,7 +43,7 @@ class TodoAdapter(
                 setOnKeyListener { _, keyCode, event ->
                     return@setOnKeyListener if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         Todo(goalId = todo.goalId, todo = text.toString(), date = todo.date).apply {
-                            viewModel.insertTodo(this)
+                            homeViewModel.insertTodo(this)
                             this.type = OUTPUT
                             list[list.lastIndex] = this
                         }

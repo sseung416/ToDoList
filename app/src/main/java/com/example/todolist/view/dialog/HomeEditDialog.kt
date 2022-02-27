@@ -14,13 +14,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeEditDialog(
     private val todo: Todo
 ) : BaseDialog<DialogHomeEditBinding, HomeEditViewModel>() {
+    override val viewModel: HomeEditViewModel by activityViewModels()
+
     override fun init() {
         binding.btnEdit.setOnClickListener {
-            viewModel.editEvent.call()
+            // todo 어쨋든 수정하는 동작
+            viewModel.updateTodo(todo)
         }
 
         binding.btnDelete.setOnClickListener {
             viewModel.deleteTodo(todo)
+            dismiss()
         }
 
         binding.btnTomorrow.setOnClickListener {
@@ -35,12 +39,12 @@ class HomeEditDialog(
     }
 
     override fun observerViewModel() {
-        with (viewModel) {}
+        with (viewModel) {
+
+        }
     }
 
     private fun getNextDate(date: String): String =  date.formatToDate().sum(1).formatToString()
 
     companion object { const val TAG = "HomeEditDialog" }
-
-    override val viewModel: HomeEditViewModel by activityViewModels()
 }

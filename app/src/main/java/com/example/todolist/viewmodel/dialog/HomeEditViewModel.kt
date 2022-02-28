@@ -12,14 +12,13 @@ import javax.inject.Inject
 class HomeEditViewModel @Inject constructor(
     private val todoRepository: TodoRepository
 ) : BaseViewModel() {
-    val editEvent = SingleLiveEvent<Unit>()
+    val editEvent = SingleLiveEvent<Todo>()
     val deleteEvent = SingleLiveEvent<Unit>()
     val tomorrowEvent = SingleLiveEvent<Unit>()
     val repeatEvent = SingleLiveEvent<Unit>()
 
     fun updateTodo(todo: Todo) {
         addDisposable(todoRepository.update(todo), {
-            editEvent.call()
         }, {
             Log.e(TAG, "updateTodo: $it")
         })

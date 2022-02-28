@@ -25,9 +25,10 @@ class GoalAdapter(
     inner class ViewHolder(
         private val binding: ItemGoalBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        val todoAdapter = TodoAdapter(homeViewModel)
+
         fun bind(data: GoalAndAllTodos) {
             val goal = data.goal
-            val todoAdapter = TodoAdapter(homeViewModel)
 
             binding.btnGoal.apply {
                 text = goal.goal
@@ -37,7 +38,7 @@ class GoalAdapter(
             binding.btnAdd.apply {
                 setColorFilter(ContextCompat.getColor(context, goal.color), PorterDuff.Mode.SRC_IN)
                 setOnClickListener {
-                    todoAdapter.addTodo(goal, date?: "")
+                    todoAdapter.addTodo(goal, date)
                 }
             }
 
@@ -63,6 +64,8 @@ class GoalAdapter(
         this.list.addAll(list)
         notifyDataSetChanged()
     }
+
+    fun getList() = list
 
     fun addItem(goal: Goal) {
         list.add(GoalAndAllTodos(goal, listOf()))

@@ -39,11 +39,13 @@ class TodoAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(todo: Todo) {
             binding.etTodo.apply {
+                homeViewModel.insertTodo(todo)
+
                 requestFocus()
                 setOnKeyListener { _, keyCode, event ->
                     return@setOnKeyListener if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         Todo(goalId = todo.goalId, todo = text.toString(), date = todo.date).apply {
-                            homeViewModel.insertTodo(this)
+                            homeViewModel.updateTodo(this)
                             this.type = OUTPUT
                             list[list.lastIndex] = this
                         }
@@ -84,6 +86,12 @@ class TodoAdapter(
         val todo = Todo(goalId = goal.id!!, date = date).apply { type = INPUT }
         list.add(todo)
         notifyItemInserted(list.lastIndex)
+    }
+
+    fun editTodo(todo: Todo) {
+        val position = list.indexOf(todo)
+        todo.type = INPUT
+        notifyItemChanged(position)
     }
 
     private fun <B : ViewBinding> setParentViewGroup(binding: B) {

@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun observeViewModel() {
-        with (viewModel) {
+        with(viewModel) {
             allGoalList.observe(viewLifecycleOwner, EventObserver {
                 repeat(it.size) { getTodosByDate(selectedDate.value!!.peekContent().time.formatToString()) }
             })
@@ -56,7 +56,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             })
 
             selectedDate.observe(viewLifecycleOwner, EventObserver { cal ->
-                repeat(allGoalList.value?.peekContent()?.size?: 0) { getTodosByDate(cal.time.formatToString()) }
+                repeat(
+                    allGoalList.value?.peekContent()?.size ?: 0
+                ) { getTodosByDate(cal.time.formatToString()) }
                 goalAdapter.date = cal.time.formatToString()
             })
         }
@@ -65,9 +67,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             viewModel.getAllGoals() // todo 모든 데이터 조회하기보다 생성한 목표의 id로 가져오기로 바꾸자
         }
 
-        with (homeEditViewModel) {
+        with(homeEditViewModel) {
             editEvent.observe(viewLifecycleOwner) {
+                val position =
+                    goalAdapter.getList().map { goalAndAllTodos -> goalAndAllTodos.goal.id }
+                        .toList().indexOf(it!!.goalId)
 
+                (binding.rvTodo.findViewHolderForAdapterPosition(position) as GoalAdapter.ViewHolder).todoAdapter.editTodo(it)
             }
 
             deleteEvent.observe(viewLifecycleOwner) {
@@ -80,7 +86,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         arrayListOf<GoalAndAllTodos>().apply {
             val todoMap = list.groupBy { todo -> todo.goalId }
             viewModel.allGoalList.value?.peekContent()?.forEach { goal ->
-                this.add(GoalAndAllTodos(goal, todoMap[goal.id]?: listOf()))
+                this.add(GoalAndAllTodos(goal, todoMap[goal.id] ?: listOf()))
             }
         }
+
+    companion object {
+        private const val TAG = "HomeFragment"
+    }
 }

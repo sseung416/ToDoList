@@ -18,8 +18,7 @@ class HomeEditDialog(
 
     override fun init() {
         binding.btnEdit.setOnClickListener {
-            // todo 어쨋든 수정하는 동작
-            viewModel.updateTodo(todo)
+            viewModel.editEvent.postValue(todo)
         }
 
         binding.btnDelete.setOnClickListener {

@@ -19,6 +19,7 @@ class HomeEditDialog(
     override fun init() {
         binding.btnEdit.setOnClickListener {
             viewModel.editEvent.postValue(todo)
+            dismiss()
         }
 
         binding.btnDelete.setOnClickListener {
@@ -29,11 +30,13 @@ class HomeEditDialog(
         binding.btnTomorrow.setOnClickListener {
             todo.date = getNextDate(todo.date)
             viewModel.updateTodo(todo)
+            dismiss()
         }
 
         binding.btnRepeat.setOnClickListener {
             todo.isRepeat = true
             viewModel.updateTodo(todo)
+            dismiss()
         }
     }
 

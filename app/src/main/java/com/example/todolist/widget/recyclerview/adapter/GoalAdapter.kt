@@ -2,6 +2,7 @@ package com.example.todolist.widget.recyclerview.adapter
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -18,6 +19,8 @@ class GoalAdapter(
     private val homeViewModel: HomeViewModel
 ) : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
     var onLongClickTodoList: ((Todo)->Boolean)? = null
+    var onKeyDoneTodo: ((IBinder)->Unit)? = null
+
     var date: String = Calendar.getInstance().time.formatToString()
 
     private val list = arrayListOf<GoalAndAllTodos>()
@@ -44,6 +47,7 @@ class GoalAdapter(
 
             binding.rvTodo.adapter = todoAdapter.apply {
                 onLongClickTodo = onLongClickTodoList
+                onKeyDone = onKeyDoneTodo
                 setList(data.todos)
             }
         }

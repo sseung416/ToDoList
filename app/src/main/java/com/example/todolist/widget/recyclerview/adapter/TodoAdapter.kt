@@ -1,8 +1,12 @@
 package com.example.todolist.widget.recyclerview.adapter
 
+import android.os.IBinder
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.todolist.databinding.ItemTodoBinding
@@ -11,6 +15,8 @@ import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.Todo
 import com.example.todolist.viewmodel.dialog.HomeEditViewModel
 import com.example.todolist.viewmodel.fragment.HomeViewModel
+import com.example.todolist.widget.livedata.Event
+import com.example.todolist.widget.livedata.SingleLiveEvent
 
 class TodoAdapter(
     private val homeViewModel: HomeViewModel
@@ -18,6 +24,7 @@ class TodoAdapter(
     private val list = arrayListOf<Todo>()
 
     var onLongClickTodo: ((Todo)->Boolean)? = null
+    var onKeyDone: ((IBinder)->Unit)? = null
 
     inner class TextViewHolder(
         private val binding: ItemTodoBinding
@@ -42,14 +49,16 @@ class TodoAdapter(
                 homeViewModel.insertTodo(todo)
 
                 requestFocus()
-                setOnKeyListener { _, keyCode, event ->
-                    return@setOnKeyListener if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                        Todo(goalId = todo.goalId, todo = text.toString(), date = todo.date).apply {
-                            homeViewModel.updateTodo(this)
+                setOnEditorActionListener { _, actionId, _ ->
+                    return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        todo.apply {
+                            this.todo = text.toString()
                             this.type = OUTPUT
+                            homeViewModel.updateTodo(this)
                             list[list.lastIndex] = this
                         }
                         notifyItemChanged(list.lastIndex)
+                        onKeyDone?.invoke(windowToken)
                         true
                     } else false
                 }

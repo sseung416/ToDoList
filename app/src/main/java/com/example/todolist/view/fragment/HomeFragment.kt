@@ -1,5 +1,7 @@
 package com.example.todolist.view.fragment
 
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import com.example.todolist.base.BaseFragment
 import com.example.todolist.databinding.FragmentHomeBinding
@@ -41,6 +43,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             onLongClickTodoList = onLongClickTodoList@{
                 HomeEditDialog(it).show(parentFragmentManager, HomeEditDialog.TAG)
                 return@onLongClickTodoList true
+            }
+            onKeyDoneTodo = {
+                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(it, 0)
             }
         }
     }
@@ -89,8 +95,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 this.add(GoalAndAllTodos(goal, todoMap[goal.id] ?: listOf()))
             }
         }
-
-    companion object {
-        private const val TAG = "HomeFragment"
-    }
 }

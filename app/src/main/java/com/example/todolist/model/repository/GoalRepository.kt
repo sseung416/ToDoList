@@ -4,6 +4,7 @@ import com.example.todolist.base.BaseRepository
 import com.example.todolist.model.dao.GoalDao
 import com.example.todolist.model.data.Goal
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class GoalRepository @Inject constructor(
@@ -13,7 +14,7 @@ class GoalRepository @Inject constructor(
 
     fun getGoalById(id: Int) = dao.getGoalById(id)
 
-    override fun insert(obj: Goal): Completable = dao.insert(obj)
+    override fun insert(obj: Goal): Single<Long> = dao.insert(obj)
 
     override fun update(obj: Goal): Completable = dao.update(obj)
 

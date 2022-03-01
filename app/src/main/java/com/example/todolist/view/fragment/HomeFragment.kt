@@ -1,6 +1,7 @@
 package com.example.todolist.view.fragment
 
 import android.content.Context
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import com.example.todolist.base.BaseFragment
@@ -17,6 +18,7 @@ import com.example.todolist.widget.recyclerview.adapter.WeeklyAdapter
 import com.example.todolist.widget.extension.formatToString
 import com.example.todolist.widget.livedata.Event
 import com.example.todolist.widget.livedata.EventObserver
+import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +47,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 return@onLongClickTodoList true
             }
             onKeyDoneTodo = {
-                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(it, 0)
             }
         }
@@ -61,11 +64,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 goalAdapter.setList(convertGoalAndAllTodosList(it))
             })
 
+            todoByRowId.observe(viewLifecycleOwner, EventObserver {
+                getGoalViewHolderForTodo(it).todoAdapter.updateTodo(it.apply { type = TodoAdapter.OUTPUT })
+            })
+
+            insertEvent.observe(viewLifecycleOwner, EventObserver {
+                getAllGoals()
+//                getTodoByRowId(it)
+            })
+
             selectedDate.observe(viewLifecycleOwner, EventObserver { cal ->
                 repeat(
                     allGoalList.value?.peekContent()?.size ?: 0
                 ) { getTodosByDate(cal.time.formatToString()) }
-                goalAdapter.date = cal.time.formatToString()
+                goalAdapter.selectedDate = cal.time.formatToString()
             })
         }
 
@@ -75,11 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         with(homeEditViewModel) {
             editEvent.observe(viewLifecycleOwner) {
-                val position =
-                    goalAdapter.getList().map { goalAndAllTodos -> goalAndAllTodos.goal.id }
-                        .toList().indexOf(it!!.goalId)
-
-                (binding.rvTodo.findViewHolderForAdapterPosition(position) as GoalAdapter.ViewHolder).todoAdapter.editTodo(it)
+                getGoalViewHolderForTodo(it!!).todoAdapter.updateTodo(it.apply { type = TodoAdapter.INPUT_UPDATE })
             }
 
             deleteEvent.observe(viewLifecycleOwner) {
@@ -95,4 +103,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 this.add(GoalAndAllTodos(goal, todoMap[goal.id] ?: listOf()))
             }
         }
+
+    private fun getGoalViewHolderForTodo(todo: Todo): GoalAdapter.ViewHolder =
+        (binding.rvTodo.findViewHolderForAdapterPosition(getGaolAdapterPosition(todo)) as GoalAdapter.ViewHolder)
+
+    private fun getGaolAdapterPosition(todo: Todo): Int =
+        goalAdapter.getList().map { goalAndAllTodos -> goalAndAllTodos.goal.id }.toList()
+            .indexOf(todo.goalId)
 }

@@ -9,7 +9,7 @@ import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
     childColumns = arrayOf("goal_id")
 )])
 data class Todo(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @PrimaryKey(autoGenerate = true) var id: Int? = null,
     @ColumnInfo(name = "goal_id") val goalId: Int,
     var todo: String = "",
     var date: String,

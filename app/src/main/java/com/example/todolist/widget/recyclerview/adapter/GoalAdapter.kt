@@ -21,7 +21,7 @@ class GoalAdapter(
     var onLongClickTodoList: ((Todo)->Boolean)? = null
     var onKeyDoneTodo: ((IBinder)->Unit)? = null
 
-    var date: String = Calendar.getInstance().time.formatToString()
+    var selectedDate: String = Calendar.getInstance().time.formatToString()
 
     private val list = arrayListOf<GoalAndAllTodos>()
 
@@ -41,7 +41,7 @@ class GoalAdapter(
             binding.btnAdd.apply {
                 setColorFilter(ContextCompat.getColor(context, goal.color), PorterDuff.Mode.SRC_IN)
                 setOnClickListener {
-                    todoAdapter.addTodo(goal, date)
+                    todoAdapter.addTodo(goal, selectedDate)
                 }
             }
 

@@ -23,8 +23,8 @@ class TodoAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = arrayListOf<Todo>()
 
-    var onLongClickTodo: ((Todo)->Boolean)? = null
-    var onKeyDone: ((IBinder)->Unit)? = null
+    var onLongClickTodo: ((Todo) -> Boolean)? = null
+    var onKeyDone: ((IBinder) -> Unit)? = null
 
     inner class TextViewHolder(
         private val binding: ItemTodoBinding
@@ -37,30 +37,52 @@ class TodoAdapter(
                 setOnCheckedChangeListener { _, _ ->
                     homeViewModel.updateTodo(data.apply { isCompleted = true })
                 }
-             }
+            }
         }
     }
 
-    inner class InputViewHolder(
-        private val binding: ItemTodoInputBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    inner class InputInsertViewHolder(binding: ItemTodoInputBinding)
+        : InputViewHolder(binding, INPUT_INSERT) {
         fun bind(todo: Todo) {
-            binding.etTodo.apply {
-                homeViewModel.insertTodo(todo)
+            setEditTextEvent(todo)
+        }
+    }
 
+    inner class InputUpdateViewHolder(binding: ItemTodoInputBinding)
+        : InputViewHolder(binding, INPUT_UPDATE) {
+        fun bind(todo: Todo) {
+            setEditTextEvent(todo)
+        }
+    }
+
+    abstract inner class InputViewHolder(
+        private val binding: ItemTodoInputBinding,
+        private val inputType: Int
+    ) : RecyclerView.ViewHolder(binding.root) {
+        protected fun setEditTextEvent(todo: Todo) {
+            binding.etTodo.apply {
                 requestFocus()
                 setOnEditorActionListener { _, actionId, _ ->
                     return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        onKeyDone?.invoke(windowToken)
+
                         todo.apply {
                             this.todo = text.toString()
                             this.type = OUTPUT
-                            homeViewModel.updateTodo(this)
-                            list[list.lastIndex] = this
+                            queryByInputType(todo)
                         }
-                        notifyItemChanged(list.lastIndex)
-                        onKeyDone?.invoke(windowToken)
                         true
                     } else false
+                }
+            }
+        }
+
+        private fun queryByInputType(todo: Todo) {
+            when (inputType) {
+                INPUT_INSERT -> homeViewModel.insertTodo(todo)
+                INPUT_UPDATE -> {
+                    homeViewModel.updateTodo(todo)
+                    updateTodo(todo.apply { type = OUTPUT })
                 }
             }
         }
@@ -68,17 +90,26 @@ class TodoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
-            INPUT -> InputViewHolder(
-                ItemTodoInputBinding.inflate(LayoutInflater.from(parent.context), null, false).apply { setParentViewGroup(this) }
+            INPUT_INSERT -> InputInsertViewHolder(
+                ItemTodoInputBinding.inflate(LayoutInflater.from(parent.context), null, false)
+                    .apply { setParentViewGroup(this) }
+            )
+            INPUT_UPDATE -> InputUpdateViewHolder(
+                ItemTodoInputBinding.inflate(LayoutInflater.from(parent.context), null, false)
+                    .apply { setParentViewGroup(this) }
             )
             else -> TextViewHolder(
-                ItemTodoBinding.inflate(LayoutInflater.from(parent.context), null, false).apply { setParentViewGroup(this) }
+                ItemTodoBinding.inflate(LayoutInflater.from(parent.context), null, false)
+                    .apply { setParentViewGroup(this) }
             )
         }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is TextViewHolder) holder.bind(list[position])
-        else if (holder is InputViewHolder) holder.bind(list[position])
+        when (holder) {
+            is TextViewHolder -> holder.bind(list[position])
+            is InputInsertViewHolder -> holder.bind(list[position])
+            is InputUpdateViewHolder -> holder.bind(list[position])
+        }
     }
 
     override fun getItemCount(): Int = list.size
@@ -92,14 +123,13 @@ class TodoAdapter(
     }
 
     fun addTodo(goal: Goal, date: String) {
-        val todo = Todo(goalId = goal.id!!, date = date).apply { type = INPUT }
+        val todo = Todo(goalId = goal.id!!, date = date).apply { type = INPUT_INSERT }
         list.add(todo)
         notifyItemInserted(list.lastIndex)
     }
 
-    fun editTodo(todo: Todo) {
+    fun updateTodo(todo: Todo) {
         val position = list.indexOf(todo)
-        todo.type = INPUT
         notifyItemChanged(position)
     }
 
@@ -112,6 +142,7 @@ class TodoAdapter(
 
     companion object {
         const val OUTPUT = 0
-        private const val INPUT = 1
+        private const val INPUT_INSERT = 1
+        const val INPUT_UPDATE = 2
     }
 }

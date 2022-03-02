@@ -1,5 +1,6 @@
 package com.example.todolist.view.dialog
 
+import android.media.metrics.Event
 import androidx.fragment.app.activityViewModels
 import com.example.todolist.base.BaseDialog
 import com.example.todolist.databinding.DialogHomeEditBinding
@@ -8,6 +9,8 @@ import com.example.todolist.viewmodel.dialog.HomeEditViewModel
 import com.example.todolist.widget.extension.formatToDate
 import com.example.todolist.widget.extension.formatToString
 import com.example.todolist.widget.extension.sum
+import com.example.todolist.widget.recyclerview.adapter.GoalAdapter
+import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +21,7 @@ class HomeEditDialog(
 
     override fun init() {
         binding.btnEdit.setOnClickListener {
-            viewModel.editEvent.postValue(todo)
+            viewModel.updateTodo(todo.apply { TodoAdapter.INPUT_UPDATE })
             dismiss()
         }
 
@@ -40,13 +43,11 @@ class HomeEditDialog(
         }
     }
 
-    override fun observerViewModel() {
-        with (viewModel) {
+    override fun observerViewModel() {}
 
-        }
+    private fun getNextDate(date: String): String = date.formatToDate().sum(1).formatToString()
+
+    companion object {
+        const val TAG = "HomeEditDialog"
     }
-
-    private fun getNextDate(date: String): String =  date.formatToDate().sum(1).formatToString()
-
-    companion object { const val TAG = "HomeEditDialog" }
 }

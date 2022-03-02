@@ -129,8 +129,13 @@ class TodoAdapter(
     }
 
     fun updateTodo(todo: Todo) {
-        val position = list.indexOf(todo)
-        notifyItemChanged(position)
+        notifyItemChanged(list.indexOf(todo))
+    }
+
+    fun deleteTodo(todo: Todo) {
+        val position = list.indexOf(todo.apply { isRepeat = false })
+        list.removeAt(position)
+        notifyItemRangeChanged(position, list.lastIndex)
     }
 
     private fun <B : ViewBinding> setParentViewGroup(binding: B) {

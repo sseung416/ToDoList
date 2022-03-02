@@ -65,13 +65,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             })
 
             todoByRowId.observe(viewLifecycleOwner, EventObserver {
-                getGoalViewHolderForTodo(it).todoAdapter.updateTodo(it.apply { type = TodoAdapter.OUTPUT })
+                getGoalViewHolderForTodo(it).todoAdapter.updateTodo(it.apply {
+                    type = TodoAdapter.OUTPUT
+                })
             })
 
             insertEvent.observe(viewLifecycleOwner, EventObserver {
                 getAllGoals()
 //                getTodoByRowId(it)
             })
+
+            updateEvent.observe(viewLifecycleOwner) {
+//                getGoalViewHolderForTodo()
+            }
 
             selectedDate.observe(viewLifecycleOwner, EventObserver { cal ->
                 repeat(
@@ -87,7 +93,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         with(homeEditViewModel) {
             editEvent.observe(viewLifecycleOwner) {
-                getGoalViewHolderForTodo(it!!).todoAdapter.updateTodo(it.apply { type = TodoAdapter.INPUT_UPDATE })
+                val todo = it.peekContent()
+                val todoAdapter = getGoalViewHolderForTodo(todo).todoAdapter
+                if (todo.type == TodoAdapter.INPUT_UPDATE) {
+                    todoAdapter.updateTodo(todo)
+                } else {
+                    todoAdapter.deleteTodo(todo)
+                }
             }
 
             deleteEvent.observe(viewLifecycleOwner) {

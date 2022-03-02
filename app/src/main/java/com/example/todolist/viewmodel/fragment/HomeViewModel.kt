@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
     val allGoalList = MutableLiveData<Event<List<Goal>>>()
     val todoListByDate = MutableLiveData<Event<List<Todo>>>()
     val todoByRowId = MutableLiveData<Event<Todo>>()
-//    val updateEvent = MutableLiveData<Event>
+    val updateEvent = SingleLiveEvent<Unit>()
     val insertEvent = MutableLiveData<Event<Long>>()
 
     fun getAllGoals() {
@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor(
     
     fun updateTodo(todo: Todo) {
         addDisposable(todoRepository.update(todo), {
-            Log.e(TAG, "updateTodo: $todo", )
+            updateEvent.call()
         }, {
             Log.e(TAG, "updateTodo: ${it.message}", )
         })

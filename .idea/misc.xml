@@ -28,8 +28,13 @@
         <entry key="app/src/main/res/layout/item_todo.xml" value="0.37475596994593524" />
         <entry key="app/src/main/res/layout/item_todo_input.xml" value="0.3609512329101563" />
         <entry key="app/src/main/res/layout/item_weekly.xml" value="0.49367726643880216" />
+        <entry key="app/src/main/res/layout/item_widget_todo.xml" value="0.2391304347826087" />
+        <entry key="app/src/main/res/layout/layout_widget.xml" value="0.2391304347826087" />
+        <entry key="app/src/main/res/layout/new_app_widget.xml" value="0.2391304347826087" />
         <entry key="app/src/main/res/layout/rv_item_color_picker.xml" value="0.2265625" />
         <entry key="app/src/main/res/layout/rv_item_task.xml" value="0.12907608695652173" />
+        <entry key="app/src/main/res/layout/widget_todo_simple.xml" value="0.314105224609375" />
+        <entry key="app/src/main/res/xml/widget_provider.xml" value="0.2391304347826087" />
       </map>
     </option>
   </component>

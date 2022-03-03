@@ -20,6 +20,7 @@ import com.example.todolist.widget.livedata.Event
 import com.example.todolist.widget.livedata.EventObserver
 import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
@@ -29,6 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val goalAdapter by lazy { GoalAdapter(viewModel) }
 
     override fun init() {
+        viewModel.getRepeatTodo(Calendar.getInstance().time.formatToString())
         viewModel.getAllGoals()
 
         binding.btnMenu.setOnClickListener {
@@ -38,6 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         binding.rvWeekly.adapter = WeeklyAdapter().apply {
             onClickDay = {
                 viewModel.selectedDate.value = Event(it)
+                viewModel.getRepeatTodo(it.time.formatToString())
             }
         }
 
@@ -64,12 +67,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 goalAdapter.setList(convertGoalAndAllTodosList(it))
             })
 
-            todoByRowId.observe(viewLifecycleOwner, EventObserver {
-                getGoalViewHolderForTodo(it).todoAdapter.updateTodo(it.apply {
-                    type = TodoAdapter.OUTPUT
-                })
-            })
-
             insertEvent.observe(viewLifecycleOwner, EventObserver {
                 getAllGoals()
 //                getTodoByRowId(it)
@@ -84,6 +81,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                     allGoalList.value?.peekContent()?.size ?: 0
                 ) { getTodosByDate(cal.time.formatToString()) }
                 goalAdapter.selectedDate = cal.time.formatToString()
+            })
+
+            repeatTodoList.observe(viewLifecycleOwner, EventObserver {
+                goalAdapter.setList(convertGoalAndAllTodosList(it))
             })
         }
 

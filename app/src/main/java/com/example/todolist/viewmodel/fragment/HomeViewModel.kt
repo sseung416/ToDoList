@@ -26,6 +26,8 @@ class HomeViewModel @Inject constructor(
     val allGoalList = MutableLiveData<Event<List<Goal>>>()
     val todoListByDate = MutableLiveData<Event<List<Todo>>>()
     val todoByRowId = MutableLiveData<Event<Todo>>()
+    val repeatTodoList = MutableLiveData<Event<List<Todo>>>()
+
     val updateEvent = SingleLiveEvent<Unit>()
     val insertEvent = MutableLiveData<Event<Long>>()
 
@@ -33,7 +35,7 @@ class HomeViewModel @Inject constructor(
         addDisposable(goalRepository.allGoals, {
             allGoalList.postValue(Event(it as List<Goal>))
         }, {
-            Log.e(TAG, "getAllGoals: ${it.message}", )
+            Log.e(TAG, "getAllGoals: ${it.message}")
         })
     }
 
@@ -41,15 +43,15 @@ class HomeViewModel @Inject constructor(
         addDisposable(todoRepository.getTodosByDate(date), {
             todoListByDate.postValue(Event(it as List<Todo>))
         }, {
-            Log.e(TAG, "getTodosByDate: ${it.message}", )
+            Log.e(TAG, "getTodosByDate: ${it.message}")
         })
     }
 
-    fun getTodoByRowId(rowId: Long) {
-        addDisposable(todoRepository.getTodoByRowId(rowId), {
-            todoByRowId.postValue(Event(it as Todo))
+    fun getRepeatTodo(date: String) {
+        addDisposable(todoRepository.getRepeatTodo(date), {
+            repeatTodoList.postValue(Event(it as List<Todo>))
         }, {
-            Log.e(TAG, "getTodoByRowId: ${it.message}", )
+            Log.e(TAG, "getRepeatTodo: ${it.message}")
         })
     }
 
@@ -57,17 +59,19 @@ class HomeViewModel @Inject constructor(
         addDisposable(todoRepository.insert(todo), {
             insertEvent.postValue(Event(it as Long))
         }, {
-            Log.e(TAG, "insertTodo: ${it.message}", )
+            Log.e(TAG, "insertTodo: ${it.message}")
         })
     }
-    
+
     fun updateTodo(todo: Todo) {
         addDisposable(todoRepository.update(todo), {
             updateEvent.call()
         }, {
-            Log.e(TAG, "updateTodo: ${it.message}", )
+            Log.e(TAG, "updateTodo: ${it.message}")
         })
     }
 
-    companion object { private const val TAG = "HomeViewModel" }
+    companion object {
+        private const val TAG = "HomeViewModel"
+    }
 }

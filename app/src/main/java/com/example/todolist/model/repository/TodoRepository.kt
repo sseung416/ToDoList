@@ -12,7 +12,7 @@ class TodoRepository @Inject constructor(
 ) : BaseRepository<TodoDao, Todo>() {
     fun getTodosByDate(date: String) = dao.getTodosByDate(date)
 
-    fun getTodoByRowId(rowId: Long) = dao.getTodoByRowId(rowId)
+    fun getRepeatTodo(date: String) = dao.getRepeatTodo(date)
 
     override fun insert(obj: Todo): Single<Long> = dao.insert(obj)
 

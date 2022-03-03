@@ -3,7 +3,9 @@ package com.example.todolist.model.data
 import androidx.room.*
 import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
 
-@Entity(foreignKeys = [ForeignKey(
+@Entity(
+    tableName = "todo",
+    foreignKeys = [ForeignKey(
     entity = Goal::class,
     parentColumns = arrayOf("id"),
     childColumns = arrayOf("goal_id")

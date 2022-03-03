@@ -11,6 +11,6 @@ interface TodoDao : BaseDao<Todo> {
     @Query("SELECT * FROM todo WHERE date = :date ORDER BY id")
     fun getTodosByDate(date: String): Single<List<Todo>>
 
-    @Query("SELECT * FROM todo WHERE rowid = :rowId")
-    fun getTodoByRowId(rowId: Long): Single<Todo>
+    @Query("SELECT * FROM todo WHERE isRepeat = 1 AND date <> :date")
+    fun getRepeatTodo(date: String): Single<List<Todo>>
 }

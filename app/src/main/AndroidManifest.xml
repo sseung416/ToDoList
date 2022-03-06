@@ -10,12 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoList">
-
         <service
-            android:name=".widget.widget.RemoteViewService"
+            android:name=".widget.widget.service.UpdateService"
             android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+            android:exported="false" />
+        <service
+            android:name=".widget.widget.WidgetAdapterService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
             android:name=".view.activity.HomeActivity"

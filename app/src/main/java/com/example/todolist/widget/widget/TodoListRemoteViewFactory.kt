@@ -1,16 +1,21 @@
 package com.example.todolist.widget.widget
 
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.example.todolist.R
 import com.example.todolist.model.data.Todo
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
-class BaseRemoteViewService(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
-    private val list = arrayListOf<Todo>(
-        Todo(goalId = 1, todo = "테스트1", date = ""),
-        Todo(goalId = 1, todo = "테스트2", date = "")
-    )
+class TodoListRemoteViewFactory(
+    private val context: Context,
+    intent: Intent?
+) : RemoteViewsService.RemoteViewsFactory {
+    private val list = with(object : TypeToken<List<Todo>>() {}.type) {
+        Gson().fromJson<List<Todo>>(intent!!.getStringExtra("todos"), this)
+    } ?: arrayListOf()
 
     override fun onCreate() {}
 
@@ -22,7 +27,7 @@ class BaseRemoteViewService(private val context: Context) : RemoteViewsService.R
 
     override fun getViewAt(position: Int): RemoteViews {
         return RemoteViews(context.packageName, R.layout.item_widget_todo).apply {
-            this.setTextViewText(R.id.tv_todo, list[position].todo)
+            setTextViewText(R.id.tv_todo, list[position].todo)
         }
     }
 

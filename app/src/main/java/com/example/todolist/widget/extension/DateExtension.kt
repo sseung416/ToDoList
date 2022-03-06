@@ -5,6 +5,8 @@ import java.util.*
 
 private const val FORMAT = "yyyyMMdd"
 
+fun getTodayString(): String = Calendar.getInstance().time.formatToString()
+
 fun Date.formatToString(): String = SimpleDateFormat(FORMAT).format(this)
 
 fun String.formatToDate(): Date = SimpleDateFormat(FORMAT).parse(this)

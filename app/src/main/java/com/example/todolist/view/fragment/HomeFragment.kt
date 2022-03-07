@@ -1,7 +1,6 @@
 package com.example.todolist.view.fragment
 
 import android.content.Context
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import com.example.todolist.base.BaseFragment
@@ -13,12 +12,13 @@ import com.example.todolist.view.dialog.HomeEditDialog
 import com.example.todolist.viewmodel.dialog.CreateGoalViewModel
 import com.example.todolist.viewmodel.dialog.HomeEditViewModel
 import com.example.todolist.viewmodel.fragment.HomeViewModel
-import com.example.todolist.widget.recyclerview.adapter.GoalAdapter
-import com.example.todolist.widget.recyclerview.adapter.WeeklyAdapter
 import com.example.todolist.widget.extension.formatToString
 import com.example.todolist.widget.livedata.Event
 import com.example.todolist.widget.livedata.EventObserver
+import com.example.todolist.widget.recyclerview.adapter.GoalAdapter
 import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
+import com.example.todolist.widget.recyclerview.adapter.WeeklyAdapter
+import com.example.todolist.widget.viewmodel.TodoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -26,8 +26,9 @@ import java.util.*
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val homeEditViewModel: HomeEditViewModel by activityViewModels()
     private val createGoalViewModel: CreateGoalViewModel by activityViewModels()
+    private val todoViewModel: TodoViewModel by activityViewModels()
 
-    private val goalAdapter by lazy { GoalAdapter(viewModel) }
+    private val goalAdapter by lazy { GoalAdapter(todoViewModel) }
 
     override fun init() {
         viewModel.getRepeatTodo(Calendar.getInstance().time.formatToString())
@@ -67,15 +68,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 goalAdapter.setList(convertGoalAndAllTodosList(it))
             })
 
-            insertEvent.observe(viewLifecycleOwner, EventObserver {
-                getAllGoals()
-//                getTodoByRowId(it)
-            })
-
-            updateEvent.observe(viewLifecycleOwner) {
-//                getGoalViewHolderForTodo()
-            }
-
             selectedDate.observe(viewLifecycleOwner, EventObserver { cal ->
                 repeat(
                     allGoalList.value?.peekContent()?.size ?: 0
@@ -90,6 +82,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         createGoalViewModel.insertSuccessEvent.observe(viewLifecycleOwner) {
             viewModel.getAllGoals() // todo 모든 데이터 조회하기보다 생성한 목표의 id로 가져오기로 바꾸자
+        }
+
+        todoViewModel.insertEvent.observe(viewLifecycleOwner) {
+            viewModel.getAllGoals()
         }
 
         with(homeEditViewModel) {

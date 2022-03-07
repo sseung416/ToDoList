@@ -11,12 +11,12 @@ import com.example.todolist.databinding.ItemGoalBinding
 import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.GoalAndAllTodos
 import com.example.todolist.model.data.Todo
-import com.example.todolist.viewmodel.fragment.HomeViewModel
 import com.example.todolist.widget.extension.formatToString
+import com.example.todolist.widget.viewmodel.TodoViewModel
 import java.util.*
 
 class GoalAdapter(
-    private val homeViewModel: HomeViewModel
+    private val todoViewModel: TodoViewModel
 ) : RecyclerView.Adapter<GoalAdapter.ViewHolder>() {
     var onLongClickTodoList: ((Todo)->Boolean)? = null
     var onKeyDoneTodo: ((IBinder)->Unit)? = null
@@ -28,7 +28,7 @@ class GoalAdapter(
     inner class ViewHolder(
         private val binding: ItemGoalBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        val todoAdapter = TodoAdapter(homeViewModel)
+        val todoAdapter = TodoAdapter(todoViewModel)
 
         fun bind(data: GoalAndAllTodos) {
             val goal = data.goal

@@ -8,11 +8,7 @@ import com.example.todolist.model.data.Todo
 import com.example.todolist.model.repository.GoalRepository
 import com.example.todolist.model.repository.TodoRepository
 import com.example.todolist.widget.livedata.Event
-import com.example.todolist.widget.livedata.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.core.Single
-import retrofit2.internal.EverythingIsNonNull
-import java.sql.RowId
 import java.util.*
 import javax.inject.Inject
 
@@ -25,11 +21,8 @@ class HomeViewModel @Inject constructor(
 
     val allGoalList = MutableLiveData<Event<List<Goal>>>()
     val todoListByDate = MutableLiveData<Event<List<Todo>>>()
-    val todoByRowId = MutableLiveData<Event<Todo>>()
     val repeatTodoList = MutableLiveData<Event<List<Todo>>>()
-
-    val updateEvent = SingleLiveEvent<Unit>()
-    val insertEvent = MutableLiveData<Event<Long>>()
+    val todoDateList = MutableLiveData<Event<List<Date>>>()
 
     fun getAllGoals() {
         addDisposable(goalRepository.allGoals, {
@@ -55,20 +48,8 @@ class HomeViewModel @Inject constructor(
         })
     }
 
-    fun insertTodo(todo: Todo) {
-        addDisposable(todoRepository.insert(todo), {
-            insertEvent.postValue(Event(it as Long))
-        }, {
-            Log.e(TAG, "insertTodo: ${it.message}")
-        })
-    }
+    fun getTodoDateList(startDate: String, endDate: String) {
 
-    fun updateTodo(todo: Todo) {
-        addDisposable(todoRepository.update(todo), {
-            updateEvent.call()
-        }, {
-            Log.e(TAG, "updateTodo: ${it.message}")
-        })
     }
 
     companion object {

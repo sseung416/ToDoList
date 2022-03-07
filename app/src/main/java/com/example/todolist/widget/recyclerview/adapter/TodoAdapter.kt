@@ -1,25 +1,19 @@
 package com.example.todolist.widget.recyclerview.adapter
 
 import android.os.IBinder
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.todolist.databinding.ItemTodoBinding
 import com.example.todolist.databinding.ItemTodoInputBinding
 import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.Todo
-import com.example.todolist.viewmodel.dialog.HomeEditViewModel
-import com.example.todolist.viewmodel.fragment.HomeViewModel
-import com.example.todolist.widget.livedata.Event
-import com.example.todolist.widget.livedata.SingleLiveEvent
+import com.example.todolist.widget.viewmodel.TodoViewModel
 
 class TodoAdapter(
-    private val homeViewModel: HomeViewModel
+    private val todoViewModel: TodoViewModel
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = arrayListOf<Todo>()
 
@@ -35,7 +29,7 @@ class TodoAdapter(
                 text = data.todo
                 setOnLongClickListener { onLongClickTodo?.invoke(data)!! }
                 setOnCheckedChangeListener { _, _ ->
-                    homeViewModel.updateTodo(data.apply { isCompleted = true })
+                    todoViewModel.updateTodo(data.apply { isCompleted = true })
                 }
             }
         }
@@ -79,9 +73,9 @@ class TodoAdapter(
 
         private fun queryByInputType(todo: Todo) {
             when (inputType) {
-                INPUT_INSERT -> homeViewModel.insertTodo(todo)
+                INPUT_INSERT -> todoViewModel.insertTodo(todo)
                 INPUT_UPDATE -> {
-                    homeViewModel.updateTodo(todo)
+                    todoViewModel.updateTodo(todo)
                     updateTodo(todo.apply { type = OUTPUT })
                 }
             }

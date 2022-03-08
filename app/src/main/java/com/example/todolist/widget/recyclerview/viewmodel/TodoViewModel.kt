@@ -1,4 +1,4 @@
-package com.example.todolist.widget.viewmodel
+package com.example.todolist.widget.recyclerview.viewmodel
 
 import android.util.Log
 import com.example.todolist.base.BaseViewModel

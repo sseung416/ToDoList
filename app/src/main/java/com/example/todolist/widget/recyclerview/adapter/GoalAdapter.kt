@@ -12,7 +12,7 @@ import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.GoalAndAllTodos
 import com.example.todolist.model.data.Todo
 import com.example.todolist.widget.extension.formatToString
-import com.example.todolist.widget.viewmodel.TodoViewModel
+import com.example.todolist.widget.recyclerview.viewmodel.TodoViewModel
 import java.util.*
 
 class GoalAdapter(

@@ -10,7 +10,7 @@ import com.example.todolist.databinding.ItemTodoBinding
 import com.example.todolist.databinding.ItemTodoInputBinding
 import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.Todo
-import com.example.todolist.widget.viewmodel.TodoViewModel
+import com.example.todolist.widget.recyclerview.viewmodel.TodoViewModel
 
 class TodoAdapter(
     private val todoViewModel: TodoViewModel

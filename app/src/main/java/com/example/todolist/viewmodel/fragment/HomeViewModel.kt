@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.todolist.base.BaseViewModel
 import com.example.todolist.model.data.Goal
 import com.example.todolist.model.data.Todo
+import com.example.todolist.model.data.TodoDate
 import com.example.todolist.model.repository.GoalRepository
 import com.example.todolist.model.repository.TodoRepository
 import com.example.todolist.widget.livedata.Event
@@ -22,7 +23,7 @@ class HomeViewModel @Inject constructor(
     val allGoalList = MutableLiveData<Event<List<Goal>>>()
     val todoListByDate = MutableLiveData<Event<List<Todo>>>()
     val repeatTodoList = MutableLiveData<Event<List<Todo>>>()
-    val todoDateList = MutableLiveData<Event<List<Date>>>()
+    val todoDateList = MutableLiveData<Event<List<TodoDate>>>()
 
     fun getAllGoals() {
         addDisposable(goalRepository.allGoals, {
@@ -48,8 +49,12 @@ class HomeViewModel @Inject constructor(
         })
     }
 
-    fun getTodoDateList(startDate: String, endDate: String) {
-
+    fun getTodoDates(startDate: String, endDate: String) {
+        addDisposable(todoRepository.getTodoDate(startDate, endDate), {
+            todoDateList.postValue(Event(it as List<TodoDate>))
+        }, {
+            Log.e(TAG, "getTodoDates: ${it.message}", )
+        })
     }
 
     companion object {

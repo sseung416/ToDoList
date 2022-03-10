@@ -29,11 +29,7 @@ class CreateGoalDialog : BaseDialog<DialogCreateGoalBinding, CreateGoalViewModel
         }
     }
 
-    override fun observerViewModel() {
-        with (viewModel) {
-            insertSuccessEvent.observe(viewLifecycleOwner) {}
-        }
-    }
+    override fun observerViewModel() {}
 
     override fun onResume() {
         super.onResume()

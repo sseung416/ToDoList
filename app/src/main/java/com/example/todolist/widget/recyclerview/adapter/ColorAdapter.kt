@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.databinding.ItemColorBinding
@@ -18,6 +17,8 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
     )
 
     private var selectedPosition = 0
+
+    private var isInit = false
 
     inner class ViewHolder(
         private val binding: ItemColorBinding
@@ -34,7 +35,12 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
                 }
             }
 
-            binding.ivChecked.visibility = INVISIBLE
+            binding.ivChecked.visibility = if (!isInit && position == 0) initCheckVisible() else INVISIBLE
+        }
+
+        private fun initCheckVisible(): Int {
+            isInit = true
+            return VISIBLE
         }
     }
 

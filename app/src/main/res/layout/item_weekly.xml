@@ -25,10 +25,11 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_isTodo"
+            setCardBackgroundColor="@{data.selected}"
+            setVisible="@{data.hasTodo}"
             android:layout_width="4dp"
             android:layout_height="4dp"
             android:visibility="invisible"
-            app:cardBackgroundColor="@color/grey2"
             app:cardCornerRadius="50dp"
             app:layout_constraintEnd_toEndOf="@+id/btn_day"
             app:layout_constraintStart_toStartOf="@+id/btn_day"

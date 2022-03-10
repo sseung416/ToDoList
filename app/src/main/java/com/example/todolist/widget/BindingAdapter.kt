@@ -1,8 +1,11 @@
 package com.example.todolist.widget
 
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.example.todolist.R
 import com.example.todolist.widget.extension.formatToString
@@ -24,14 +27,23 @@ private fun formatStringDate(calendar: Calendar): String {
 
 @BindingAdapter("setTint")
 fun setTint(view: ImageButton, isSelected: Boolean) {
-    val color = if (isSelected) R.color.black else R.color.grey2
-    view.setColorFilter(color.getColor(view.context))
+    view.setColorFilter(getColorBySelected(isSelected).getColor(view.context))
 }
 
 @BindingAdapter("setTextColor")
 fun setTextColor(view: TextView, isSelected: Boolean) {
-    val color = if (isSelected) R.color.black else R.color.grey2
-    view.setTextColor(color.getColor(view.context))
+    view.setTextColor(getColorBySelected(isSelected).getColor(view.context))
 }
 
+@BindingAdapter("setCardBackgroundColor")
+fun setCardBackgroundColor(view: CardView, isSelected: Boolean) {
+    view.setCardBackgroundColor(getColorBySelected(isSelected).getColor(view.context))
+}
 
+private fun getColorBySelected(isSelected: Boolean) =
+    if (isSelected) R.color.black else R.color.grey2
+
+@BindingAdapter("setVisible")
+fun setVisible(view: View, isVisible: Boolean) {
+    view.visibility = if (isVisible) VISIBLE else INVISIBLE
+}

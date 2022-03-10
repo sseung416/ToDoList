@@ -4,20 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ItemWeeklyBinding
-import com.example.todolist.model.data.TodoDate
 import com.example.todolist.model.data.Weekly
 import com.example.todolist.widget.extension.getCalendar
-import com.example.todolist.widget.recyclerview.viewmodel.WeeklyViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
-    private val weeklyViewModel = WeeklyViewModel()
-
     var onClickDay: ((Calendar) -> Unit)? = null
     private var selectedPosition = 0
 
-    val hasTodoDateQueue = arrayListOf<TodoDate>()
-
+    val hasTodoDateQueue = arrayListOf<String>()
     private val list = arrayListOf<Weekly>()
 
     inner class ViewHolder(
@@ -31,7 +27,7 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
                         notifyItemChanged(selectedPosition)
                         selectedPosition = position
 
-                        onClickDay?.invoke(weeklyViewModel.getTodayDate(position).toInt().getCalendar())
+                        onClickDay?.invoke(getTodayDate(position).toInt().getCalendar())
                         executeBindings(list[position])
                     }
                 }
@@ -57,11 +53,34 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = 7
 
+    private fun getToday(position: Int): String =
+        when (position + 2) {
+            Calendar.MONDAY -> "월"
+            Calendar.TUESDAY -> "화"
+            Calendar.WEDNESDAY -> "수"
+            Calendar.THURSDAY -> "목"
+            Calendar.FRIDAY -> "금"
+            Calendar.SATURDAY -> "토"
+            else -> "일"
+        }
+
+    private fun getTodayDate(position: Int): String {
+        val today = Calendar.getInstance()
+        var dayNum = position + 2
+
+        if (dayNum == 8) {
+            today.add(Calendar.DAY_OF_WEEK, 7)
+            dayNum = 1
+        }
+
+        today.set(Calendar.DAY_OF_WEEK, dayNum)
+
+        return SimpleDateFormat("d").format(today.time)
+    }
+
     init {
-        weeklyViewModel.apply {
-            for (i in (0..7)) {
-                list.add(Weekly(getTodayDate(i), getToday(i)))
-            }
+        for (i in (0..7)) {
+            list.add(Weekly(getTodayDate(i), getToday(i)))
         }
     }
 }

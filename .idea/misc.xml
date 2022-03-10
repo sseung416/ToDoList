@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.33645833333333336" />
         <entry key="..\:/Github/ToDoList/ToDoList/app/src/main/res/layout/fragment_todo_list.xml" value="0.1" />
         <entry key="..\:/Github/ToDoList/ToDoList/app/src/main/res/layout/rv_item_task.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/_color_picker.xml" value="0.1565" />

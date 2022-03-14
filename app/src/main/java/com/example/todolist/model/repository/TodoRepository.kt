@@ -14,6 +14,8 @@ class TodoRepository @Inject constructor(
 
     fun getRepeatTodo(date: String) = dao.getRepeatTodo(date)
 
+    fun getTodoDate(startDate: String, endDate: String) = dao.getTodoDate(startDate, endDate)
+
     override fun insert(obj: Todo): Single<Long> = dao.insert(obj)
 
     override fun update(obj: Todo): Completable = dao.update(obj)

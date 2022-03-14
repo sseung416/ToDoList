@@ -1,6 +1,7 @@
 package com.example.todolist.view.fragment
 
 import android.content.Context
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import com.example.todolist.base.BaseFragment
@@ -12,13 +13,16 @@ import com.example.todolist.view.dialog.HomeEditDialog
 import com.example.todolist.viewmodel.dialog.CreateGoalViewModel
 import com.example.todolist.viewmodel.dialog.HomeEditViewModel
 import com.example.todolist.viewmodel.fragment.HomeViewModel
+import com.example.todolist.widget.extension.DateExtension
 import com.example.todolist.widget.extension.formatToString
+import com.example.todolist.widget.extension.getTodayString
+import com.example.todolist.widget.extension.getWeekDateString
 import com.example.todolist.widget.livedata.Event
 import com.example.todolist.widget.livedata.EventObserver
 import com.example.todolist.widget.recyclerview.adapter.GoalAdapter
 import com.example.todolist.widget.recyclerview.adapter.TodoAdapter
 import com.example.todolist.widget.recyclerview.adapter.WeeklyAdapter
-import com.example.todolist.widget.viewmodel.TodoViewModel
+import com.example.todolist.widget.recyclerview.viewmodel.TodoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -29,16 +33,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val todoViewModel: TodoViewModel by activityViewModels()
 
     private val goalAdapter by lazy { GoalAdapter(todoViewModel) }
+    private val weeklyAdapter by lazy { WeeklyAdapter() }
 
     override fun init() {
-        viewModel.getRepeatTodo(Calendar.getInstance().time.formatToString())
+        viewModel.getTodoDates(Calendar.MONDAY.getWeekDateString(), Calendar.SUNDAY.getWeekDateString(DateExtension.NEXT_WEEK))
+        viewModel.getRepeatTodo(getTodayString())
         viewModel.getAllGoals()
 
         binding.btnMenu.setOnClickListener {
             CreateGoalDialog().show(parentFragmentManager, CreateGoalDialog.TAG)
         }
 
-        binding.rvWeekly.adapter = WeeklyAdapter().apply {
+        binding.rvWeekly.adapter = weeklyAdapter.apply {
             onClickDay = {
                 viewModel.selectedDate.value = Event(it)
                 viewModel.getRepeatTodo(it.time.formatToString())
@@ -78,6 +84,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             repeatTodoList.observe(viewLifecycleOwner, EventObserver {
                 goalAdapter.setList(convertGoalAndAllTodosList(it))
             })
+
+            todoDateList.observe(viewLifecycleOwner, EventObserver {
+                weeklyAdapter.hasTodoDateQueueAddAll(it)
+            })
         }
 
         createGoalViewModel.insertSuccessEvent.observe(viewLifecycleOwner) {
@@ -86,6 +96,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         todoViewModel.insertEvent.observe(viewLifecycleOwner) {
             viewModel.getAllGoals()
+            viewModel.getTodoDates(Calendar.MONDAY.getWeekDateString(), Calendar.SUNDAY.getWeekDateString(DateExtension.NEXT_WEEK))
         }
 
         with(homeEditViewModel) {

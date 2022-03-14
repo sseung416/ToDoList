@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ItemWeeklyBinding
 import com.example.todolist.model.data.Weekly
+import com.example.todolist.widget.extension.formatToDate
 import com.example.todolist.widget.extension.getCalendar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,7 +14,7 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
     var onClickDay: ((Calendar) -> Unit)? = null
     private var selectedPosition = 0
 
-    val hasTodoDateQueue = arrayListOf<String>()
+    private val hasTodoDateQueue = arrayListOf<String>()
     private val list = arrayListOf<Weekly>()
 
     inner class ViewHolder(
@@ -33,6 +34,11 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
                 }
 
                 isSelected = false
+
+                if (hasTodo(date)) {
+                    hasTodo = true
+                    hasTodoDateQueue.removeAt(0)
+                }
             }
 
             executeBindings(list[position])
@@ -42,6 +48,9 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
             binding.data = item
             binding.executePendingBindings()
         }
+
+        private fun hasTodo(date: String) =
+            hasTodoDateQueue.isNotEmpty() && date == SimpleDateFormat("d").format(hasTodoDateQueue[0].formatToDate())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -76,6 +85,11 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.ViewHolder>() {
         today.set(Calendar.DAY_OF_WEEK, dayNum)
 
         return SimpleDateFormat("d").format(today.time)
+    }
+
+    fun hasTodoDateQueueAddAll(list: List<String>) {
+        hasTodoDateQueue.addAll(list)
+        notifyDataSetChanged()
     }
 
     init {

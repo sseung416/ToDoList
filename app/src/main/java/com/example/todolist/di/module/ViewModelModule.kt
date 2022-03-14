@@ -5,7 +5,7 @@ import com.example.todolist.model.repository.TodoRepository
 import com.example.todolist.viewmodel.dialog.CreateGoalViewModel
 import com.example.todolist.viewmodel.dialog.HomeEditViewModel
 import com.example.todolist.viewmodel.fragment.HomeViewModel
-import com.example.todolist.widget.viewmodel.TodoViewModel
+import com.example.todolist.widget.recyclerview.viewmodel.TodoViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
